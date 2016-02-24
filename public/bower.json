@@ -1,0 +1,34 @@
+{
+  "name": "BucketMovies",
+  "homepage": "https://github.com/jdavmo/bucket-movies",
+  "authors": [
+    "Julian David <juliangalvis75@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "www/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "1.5.0",
+    "angular-animate": "^1.5.0",
+    "angular-ui-router": "^0.2.18",
+    "ui-router-extras": "^0.1.0",
+    "angular-ui-router-anim-in-out": "^1.0.2",
+    "angular-loading-bar": "^0.8.0",
+    "angular-material": "^1.0.5",
+    "angular-aria": "^1.5.0",
+    "angular-route": "^1.5.0",
+    "moment": "^2.11.2",
+    "angular-carousel": "^1.0.1",
+    "material-design-icons": "^2.2.0"
+  }
+}

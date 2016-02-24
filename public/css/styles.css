@@ -1,0 +1,76 @@
+ul img{
+	width: 100%;
+}
+.m0{
+	margin:0 !important;	
+}
+.bm-carousel{
+	min-height:500px;
+	max-height:900px;
+}
+.transparent{
+	background-color: transparent !important;
+}
+.mt-64{
+	margin-top: -64px;
+}
+.cut_text{
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    position: relative;
+    max-height: 120px;
+}
+.cardColor{
+	background-color: rgba(255,255, 255, 0.1) !important;
+}
+.height_214{
+	height: 214px;
+}
+
+.blackMate{
+	background-color: rgba(0,0,0, 0.8) !important;	
+}
+.colorWhite{	
+	color: rgba(255,255,255, 0.7) !important;	
+}
+.f_15{
+	font-size: 15px !important;
+}
+.mt_8{
+	margin-top: 8px;
+}
+.min_h_70{
+	min-height: 70px;
+}
+.width_100{
+	width: 100% !important;
+}
+.ml_20{
+	margin-left: 20px;
+}
+.div_search{
+	margin-left: 15px;
+	margin-right: 0px;
+}
+.search{
+	width: 100%;
+	border-radius: 	4px;
+	border: none;
+	height: 35px;
+	/*margin-left: 10px;*/
+	padding-left: 20px;
+	background-color: rgba(255,255,255, 0.2) !important;
+	color: #fff;
+}
+.toolbarMain {
+    background: black !important; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(black, transparent) !important; /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(black, transparent) !important; /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(black, transparent) !important; /* For Firefox 3.6 to 15 */
+    background: linear-gradient(black, transparent) !important; /* Standard syntax */
+}
+.delay {
+    transition: all 0.3s ease-in-out;
+}
