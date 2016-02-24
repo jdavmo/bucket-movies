@@ -14,7 +14,7 @@ bucketMovies.filter('url', function() {
 
 bucketMovies.filter('icon', function() {
     return function(colection, icon) {  
-        return 'www/lib/material-design-icons/'+colection+'/svg/production/ic_'+icon+'_24px.svg';
+        return 'bower_components/material-design-icons/'+colection+'/svg/production/ic_'+icon+'_24px.svg';
     };
 });
 

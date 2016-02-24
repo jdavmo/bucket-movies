@@ -154,9 +154,7 @@ BMovies.directive('showMore', function($mdDialog, $filter) {
         scope: {
           ngModel: '=ngModel'
         },
-        link: function (scope, element, attrs, ngModelCtrl) {
-
-            scope.globaIBXLocation = {target: attrs.type, data: scope.myDirectiveVarLocation};
+        link: function (scope, element, attrs, ngModelCtrl) {            
 
             element.on('click', function(events) {
 
