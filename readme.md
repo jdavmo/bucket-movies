@@ -16,12 +16,14 @@ The BucketMovies is open-sourced software licensed under the [MIT license](http:
 
 In the app folder execute in termina
 
-composer install
+```bash
+$ composer install
+```
+in the /public folder 
 
-in the /public fordel 
-
-bower install 
-
+```bash
+$ bower install 
+```
 Make suere you have permissions
 
 Enjoy it
