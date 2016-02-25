@@ -5,56 +5,101 @@ namespace App\Http\Controllers\Movies;
 use Validator;
 use Illuminate\Http\Request;
 use Tmdb\Laravel\Facades\Tmdb;
-use Tmdb\Helper\ImageHelper;
-use Tmdb\Repository\MovieRepository;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 class MoviesController extends Controller
 {
-    private $movies;
-    private $helper;
-
-    function __construct(MovieRepository $movies, ImageHelper $helper)
-    {
-        $this->movies = $movies;
-        $this->helper = $helper;
-    }
-
+    /*
+    | first and unique view
+    */
     public function index()
     {
+        //show view
         return view('welcome');
     }
 
+    /*
+    | calling the popular movies
+    | @params
+    | @return array
+    */
     public function popular()
-    {                   
-        return array('validation' => 'ok', 'list' => Tmdb::getMoviesApi()->getPopular());
+    {             
+        try
+        {
+            //return validation ok with the popular movies
+            return array('validation' => 'ok', 'list' => Tmdb::getMoviesApi()->getPopular());
+        } catch (Exception $e) {
+            //return validation fail with the error
+            return array('validation' => 'fail', 'msn' => $e);
+        }
     }
 
+    /*
+    | calling expecific movie
+    | @params id
+    | @return array
+    */
+    public function getMovie(Request $request)
+    {     
+        //validation id
+        $messages = [
+            'id.required'    => 'Error in sent data',
+        ];
+        $rules = [
+            "id" => "required",
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages );
+        if ($validator->fails())
+        { 
+            //$messages = $validator->messages();
+            return array('validation' => 'fail', 'msn' => 'Error in sent data');
+        }
+
+        //get id movie
+        $id = $request->input('id');
+
+        try{
+            //get movie
+            $movie   = Tmdb::getMoviesApi()->getMovie($id);
+            //get credits
+            $credits = Tmdb::getMoviesApi()->getCredits($id);
+            //return validation ok with the movie and credits
+            return array('validation' => 'ok', 'movie' => $movie, 'credits' => $credits);
+
+        } catch (Exception $e) {
+            //return validation fail with the error
+            return array('validation' => 'fail', 'msn' => $e);
+        }
+        
+    }
+
+    /*
+    | calling list movies popular or person
+    | @params search page but is not required
+    | @return array
+    */
     public function listMovies(Request $request)
     {        
-        if($request->input('search'))
-        {            
-            return array('validation' => 'ok', 'list' => Tmdb::getSearchApi()->searchMulti($request->input('search'), array('page' => $request->input('page'), 'year' => '2010')));     
-        }
-        else
-        {
-            return array('validation' => 'ok', 'list' => Tmdb::getMoviesApi()->getPopular(array('page' => $request->input('page'))));
-        }        
-    }
+        try{
 
-    public function getImg($id, $quality, $type, $width, $height)
-    {   
-    	$movie = Tmdb::getMoviesApi()->getMovie($id);
+            if($request->input('search'))
+            {         
+                //return validation ok with the person movies   
+                return array('validation' => 'ok', 'list' => Tmdb::getSearchApi()->searchPersons($request->input('search'), array('page' => $request->input('page'))));     
+            }
+            else
+            {
+                //return validation ok with the popular movies
+                return array('validation' => 'ok', 'list' => Tmdb::getMoviesApi()->getPopular(array('page' => $request->input('page'))));
+            }
 
-    	if($type == 'backdrop')
-    	{
-    		echo ($this->helper->getHtml($movie['backdrop_path'], $quality, $width, $height));    		
-    	}
-    	else if($type == 'poster')
-    	{
-    		echo ($this->helper->getHtml($movie['poster_path'], $quality, $width, $height));
-    	}    		       
+        } catch (Exception $e) {
+            //return validation fail with the error
+            return array('validation' => 'fail', 'msn' => $e);
+        }    
     }
 }

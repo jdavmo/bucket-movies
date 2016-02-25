@@ -1,57 +1,159 @@
 <!--Carousel-->
-<call-popular ng-model="navBanner">
-</call-popular>
+<call-popular ng-model="navBanner" ng-if="ngModel.search == ''"></call-popular>
+
 <!--Toolbar search & sort-->
-<md-toolbar ng-if="ngModel.search != ''" class="transparent delay">
+<md-toolbar class="transparent delay z-index1" ng-class="{'mt_60': ngModel.search != ''}">
     <div class="md-toolbar-tools">
-        <md-button class="md-icon-button" aria-label="Settings">
+    	<!--Icon results-->
+        <md-button class="md-icon-button" aria-label="icon_results">
           	<md-icon md-svg-icon="{{('av' | icon:'movie')}}"></md-icon>
         </md-button>
+        <!--Title results-->
         <h2>
-          	<span>Results for "{{ngModel.search}}"</span>
+          	<span ng-if="ngModel.search != ''">Results for "{{ngModel.search}}"</span>
+          	<span ng-if="ngModel.search == ''">Popular movies</span>
         </h2>
         <span flex></span>
-        <!--Icons Sort-->
-        <md-button class="md-icon-button" aria-label="sort" ng-click="ngModel.sort = 'dateUp'" ng-if="ngModel.sort == 'dateDown'">
-          	<md-icon md-svg-icon="{{('navigation' | icon:'arrow_upward')}}" ></md-icon>
-        </md-button>        
-        <md-button class="md-icon-button" aria-label="sort" ng-click="ngModel.sort = 'dateDown'" ng-if="ngModel.sort == 'dateUp' || (ngModel.search != '' && ngModel.sort == '')">
-          	<md-icon md-svg-icon="{{('navigation' | icon:'arrow_downward')}}"></md-icon>
+        <md-button class="md-icon-button" aria-label="back actors" ng-click="ngModel.actorMovies = ''" ng-if="ngModel.actorMovies != ''">
+          	<md-icon md-svg-icon="{{('navigation' | icon:'arrow_back')}}" ></md-icon>
         </md-button>
+
+        <!--Icons Sort Actors-->
+        <div ng-if="ngModel.actorMovies == '' && ngModel.search != ''">
+
+	        <md-button class="md-icon-button" aria-label="sortActor" ng-click="ngModel.sortActor = true" ng-if="ngModel.sortActor == false">
+	          	<md-icon md-svg-icon="{{('navigation' | icon:'arrow_upward')}}" ></md-icon>
+	        </md-button>        
+	        <md-button class="md-icon-button" aria-label="sortActor" ng-click="ngModel.sortActor = false" ng-if="ngModel.sortActor == true || (ngModel.search != '' && ngModel.sortActor == true)">
+	          	<md-icon md-svg-icon="{{('navigation' | icon:'arrow_downward')}}"></md-icon>
+	        </md-button>
+	    </div>
+
+        <!--Icons Sort Movies Actors-->
+        <div ng-if="ngModel.actorMovies != '' && ngModel.search != ''">
+
+	        <md-button class="md-icon-button" aria-label="sortMovieActor" ng-click="ngModel.sortMovieActor = true" ng-if="ngModel.sortMovieActor == false">
+	          	<md-icon md-svg-icon="{{('navigation' | icon:'arrow_upward')}}" ></md-icon>
+	        </md-button>        
+	        <md-button class="md-icon-button" aria-label="sortMovieActor" ng-click="ngModel.sortMovieActor = false" ng-if="ngModel.sortMovieActor == true || (ngModel.search != '' && ngModel.sortMovieActor == true)">
+	          	<md-icon md-svg-icon="{{('navigation' | icon:'arrow_downward')}}"></md-icon>
+	        </md-button>
+
+	    </div>
+
     </div>
 </md-toolbar>
+
 <!--Content list-->
-<div layout-xs="column" layout="row" layout-wrap ng-class="{'mt_8': ngModel.search == ''}">	
-	<!--Movies-->
-	<div flex-xs flex-gt-xs="33" flex-gt-md="33" layout="column" ng-repeat="movie in listMovies" >
+<div layout-xs="column" layout="row" layout-wrap>	
+	<!--Movies - popular -->
+	<div flex-xs flex-gt-xs="50" flex-gt-md="33" layout="column" ng-repeat="movie in listMovies" ng-if="ngModel.search == ''">
 		<md-card class="cardColor">
+			<!--Head-->
 			<md-card-header>
+				<!--Icon head card-->
           		<md-card-avatar>
             		<md-icon ng-if="movie.media_type == 'tv'" class="md-avatar-icon" md-svg-icon="{{('hardware' | icon:'tv')}}"></md-icon>
-		            <md-icon ng-if="movie.media_type == 'movie' || movie.media_type == 'noDefined'" class="md-avatar-icon" md-svg-icon="{{('av' | icon:'movie')}}"></md-icon>
+		            <md-icon ng-if="movie.media_type == 'movie' || movie.media_type == undefined" class="md-avatar-icon" md-svg-icon="{{('av' | icon:'movie')}}"></md-icon>
           		</md-card-avatar>
+          		<!--Type-->
           		<md-card-header-text>
           			<span class="md-title colorWhite" ng-if="movie.media_type == 'tv'">Tv</span>
-		            <span class="md-title colorWhite" ng-if="movie.media_type == 'movie' || movie.media_type == 'noDefined'">Movie</span>
-		            <span class="md-subhead colorWhite">{{movie.date | DateStringToFormat | date: 'MMM yyyy'}}</span>
+		            <span class="md-title colorWhite" ng-if="movie.media_type == 'movie' || movie.media_type == undefined">Movie</span>
+		            <span class="md-subhead colorWhite">{{movie.release_date | DateStringToFormat | date: 'MMM yyyy'}}</span>
           		</md-card-header-text>
         	</md-card-header>
-		    <img ng-if="movie.backdrop_path != null" ng-src="http://image.tmdb.org/t/p/w300{{movie.backdrop_path}}" class="height_214 md-card-image" alt="">
-		    <img ng-if="movie.backdrop_path == null" ng-src="./img/no_image.png" class="height_214 md-card-image" alt="">
+        	<!--Image movie - tv-->
+		    <img ng-if="movie.backdrop_path != null" ng-src="http://image.tmdb.org/t/p/w300{{movie.backdrop_path}}" class="height_214 md-card-image" alt="backdrop">
+		    <img ng-if="movie.backdrop_path == null" ng-src="./img/no_image.png" class="height_214 md-card-image" alt="noFound">
+		    <!--Title -->
 		    <md-card-title>
 		        <md-card-title-text class="cut_text">
 		           	<span class="md-headline cut_text colorWhite">{{movie.original_title}}&nbsp;</span>
 		        </md-card-title-text>
 		    </md-card-title>
+		    <!--Description movie-->
 		    <md-card-content class="min_h_70">
 		        <p class="md-subhead colorWhite f_15">
 		        	{{movie.overview.substring(0, 100)}}...
 		        </p>
 		    </md-card-content>
+		    <!--footer card-->
 		    <md-card-actions layout="row" layout-align="end center" class="colorWhite">
 		        <md-button show-more ng-model="movie">Read +</md-button>
 		    </md-card-actions>
 		</md-card>	
 	</div>
 
+	<!--actors -->
+	<div flex-xs flex-gt-xs="50" flex-gt-md="25" layout="column" ng-repeat="person in listMovies | orderBy:'name':ngModel.sortActor" ng-if="ngModel.search != '' && ngModel.actorMovies == ''">
+		<md-card class="cardColor">
+			<!--Head-->
+			<md-card-header>
+				&nbsp;
+        	</md-card-header>
+        	<!--Image person - tv-->
+        	<md-card-avatar layout="row" layout-align="center center">
+        		<div class="divActorImg">
+        			<img ng-if="person.profile_path != null" ng-src="http://image.tmdb.org/t/p/w300{{person.profile_path}}" class="actorImg" alt="profile">
+			    	<img ng-if="person.profile_path == null" ng-src="./img/no_avatar.png" class="actorImg" alt="noFound">
+        		</div>
+			</md-card-avatar>
+		    <!--Title -->
+		    <md-card-title>
+		        <md-card-title-text class="cut_text center">
+		           	<span class="md-headline cut_text colorWhite">{{person.name}}&nbsp;</span>
+		        </md-card-title-text>
+		    </md-card-title>	
+		    <!--footer card-->
+		    <md-card-actions layout="row" class="colorWhite vert_middle">
+			    <md-icon class="colorWhite ml_5 mr_5" md-svg-icon="{{('action' | icon:'favorite')}}"></md-icon>
+			    <span class="ml_5">{{person.popularity | number:0}} K</span>
+			    <span flex></span>
+			    <md-button class="md-icon-button" ng-click="showMoviesActor($event, person);">
+		        	<md-icon class="colorWhite" md-svg-icon="{{('maps' | icon:'local_movies')}}"></md-icon>
+		        </md-button>
+		        <span class="ml-12 mr_5">{{person.known_for.length}}</span>
+		    </md-card-actions>
+		</md-card>	
+	</div>
+
+	<!--list movies actors -->
+	<div flex-xs flex-gt-xs="50" flex-gt-md="33" layout="column" ng-repeat="movie in listMoviesActors | orderBy:'release_date':ngModel.sortMovieActor" ng-if="ngModel.actorMovies != ''">
+		<md-card class="cardColor">
+			<!--Head-->
+			<md-card-header>
+				<!--Icon head card-->
+          		<md-card-avatar>
+            		<md-icon ng-if="movie.media_type == 'tv'" class="md-avatar-icon" md-svg-icon="{{('hardware' | icon:'tv')}}"></md-icon>
+		            <md-icon ng-if="movie.media_type == 'movie' || movie.media_type == undefined" class="md-avatar-icon" md-svg-icon="{{('av' | icon:'movie')}}"></md-icon>
+          		</md-card-avatar>
+          		<!--Type-->
+          		<md-card-header-text>
+          			<span class="md-title colorWhite" ng-if="movie.media_type == 'tv'">Tv</span>
+		            <span class="md-title colorWhite" ng-if="movie.media_type == 'movie' || movie.media_type == undefined">Movie</span>
+		            <span class="md-subhead colorWhite">{{movie.release_date | DateStringToFormat | date: 'MMM yyyy'}}</span>
+          		</md-card-header-text>
+        	</md-card-header>
+        	<!--Image movie - tv-->
+		    <img ng-if="movie.backdrop_path != null" ng-src="http://image.tmdb.org/t/p/w300{{movie.backdrop_path}}" class="height_214 md-card-image" alt="backdrop">
+		    <img ng-if="movie.backdrop_path == null" ng-src="./img/no_image.png" class="height_214 md-card-image" alt="noFound">
+		    <!--Title -->
+		    <md-card-title>
+		        <md-card-title-text class="cut_text">
+		           	<span class="md-headline cut_text colorWhite">{{movie.original_title}}&nbsp;</span>
+		        </md-card-title-text>
+		    </md-card-title>
+		    <!--Description movie-->
+		    <md-card-content class="min_h_70">
+		        <p class="md-subhead colorWhite f_15">
+		        	{{movie.overview.substring(0, 100)}}...
+		        </p>
+		    </md-card-content>
+		    <!--footer card-->
+		    <md-card-actions layout="row" layout-align="end center" class="colorWhite">
+		        <md-button show-more ng-model="movie">Read +</md-button>
+		    </md-card-actions>
+		</md-card>	
+	</div>
 </div>

@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('/', 'Movies\MoviesController@index');
-Route::post('callPopular', 'Movies\MoviesController@popular');
-Route::post('listMovies', 'Movies\MoviesController@listMovies');
-Route::get('getImage/{id}/{quality}/{type}/{width}/{height}', 'Movies\MoviesController@getImg');
 
 
 /*
@@ -29,5 +25,12 @@ Route::get('getImage/{id}/{quality}/{type}/{width}/{height}', 'Movies\MoviesCont
 */
 
 Route::group(['middleware' => ['web']], function () {
-    //
+	//route index this the first show
+   	Route::get('/', 'Movies\MoviesController@index');
+   	//movies popular
+	Route::post('callPopular', 'Movies\MoviesController@popular');
+	//multi movies
+	Route::post('listMovies', 'Movies\MoviesController@listMovies'); 
+	//get data movie && and credits
+	Route::post('getMovie', 'Movies\MoviesController@getMovie');
 });
