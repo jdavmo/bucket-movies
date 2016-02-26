@@ -1,7 +1,6 @@
 //Declaration module bucketMovies
 var bucketMovies = angular.module('bucketMovies', ['ngAria',
                                  'ngMaterial',
-                                 'ngRoute',
                                  'ngAnimate',
                                  'ui.router',
                                  'ct.ui.router.extras',
@@ -23,12 +22,12 @@ bucketMovies.config(function($mdThemingProvider, $stateProvider, $urlRouterProvi
     /**/
     var i = 1;
 
-    $urlRouterProvider.otherwise('/home');
+    $urlRouterProvider.otherwise('/');
     
     //state route application
     $stateProvider
         .state('home', {
-            url: '/home',
+            url: '/',
             cache: false,
             templateUrl: "templates/main/main.html?i="+i,
             controller: function($scope, $state, $stateParams, $filter) {

@@ -18,7 +18,6 @@
     <script src="../../bower_components/angular/angular.min.js"></script>
     <script src="../../bower_components/angular-animate/angular-animate.min.js"></script>
     <script src="../../bower_components/angular-aria/angular-aria.min.js"></script>
-    <script src="../../bower_components/angular-route/angular-route.min.js"></script>
     <script src="../../bower_components/angular-touch/angular-touch.min.js"></script>
     <script src="../../bower_components/angular-carousel/dist/angular-carousel.min.js"></script>
     <script src="../../bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
