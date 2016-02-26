@@ -24,7 +24,7 @@ in the /public folder execute
 ```bash
 $ bower install 
 ```
-Make suere you have permissions, you need 
+Make sure you have permissions
 
 You need permissions -R 777 in the folder /storage
 
