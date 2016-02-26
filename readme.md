@@ -59,7 +59,7 @@ MAIL_USERNAME=null
 MAIL_PASSWORD=null
 MAIL_ENCRYPTION=null
 ```
-Now execute in the foldel application 
+Now execute in the foldel application from the terminal
 
 ```bash
 $ php artisan key:generate 
@@ -68,7 +68,7 @@ $ php artisan key:generate
 This response
 
 ```bash
-Application key [mQXLGJ4QHxc3TnmFlO0sQAKvmQzKl8h4] set successfully.
+Application key [mQXLGJ4QHxc0000xxxxxsQAKvmQzKl8h4] set successfully.
 ```
 You don't need copy and paste the key in the .env file because artisan already made it, check the file
 
