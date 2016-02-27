@@ -27,9 +27,7 @@ img 			{width: 100%;}
 .mr_5			{margin-right: 5px;}
 .z-index1       {z-index: 1;}
 .z-index2       {z-index: 2;}
-.searchIcon     {position: absolute;
-  top: 5px;
-  left: 7px;}
+.searchIcon     {position: absolute;top: 5px;left: 7px;}
 .absolute       {position: absolute;}
 .relative       {position: relative;}
  
@@ -48,7 +46,7 @@ img 			{width: 100%;}
     top: 0;
     right: 0;
     z-index: 21;
-    background: #fff;
+    background: transparent;
 }
 
 #loading-bar-spinner .spinner-icon {

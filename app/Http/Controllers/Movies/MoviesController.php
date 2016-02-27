@@ -87,9 +87,25 @@ class MoviesController extends Controller
         try{
 
             if($request->input('search'))
-            {         
-                //return validation ok with the person movies   
-                return array('validation' => 'ok', 'list' => Tmdb::getSearchApi()->searchPersons($request->input('search'), array('page' => $request->input('page'))));     
+            {    
+                switch ($request->input('searchBy')) {
+                    case 'person':
+                        //return validation ok with the person movies   
+                        return array('validation' => 'ok', 'list' => Tmdb::getSearchApi()->searchPersons($request->input('search'), array('page' => $request->input('page'))));
+                    break;
+                    case 'movie':
+                        //return validation ok with the person movies   
+                        return array('validation' => 'ok', 'list' => Tmdb::getSearchApi()->searchMovies($request->input('search'), array('page' => $request->input('page'))));
+                    break;
+                    case 'tv':
+                        //return validation ok with the person movies   
+                        return array('validation' => 'ok', 'list' => Tmdb::getSearchApi()->searchTv($request->input('search'), array('page' => $request->input('page'))));
+                    break;                    
+                    default:
+                        //return validation ok with the popular movies
+                        return array('validation' => 'ok', 'list' => Tmdb::getMoviesApi()->getPopular(array('page' => $request->input('page'))));
+                    break;
+                }                
             }
             else
             {

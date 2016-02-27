@@ -47,113 +47,12 @@
 <!--Content list-->
 <div layout-xs="column" layout="row" layout-wrap>	
 	<!--Movies - popular -->
-	<div flex-xs flex-gt-xs="50" flex-gt-md="33" layout="column" ng-repeat="movie in listMovies" ng-if="ngModel.search == ''">
-		<md-card class="cardColor">
-			<!--Head-->
-			<md-card-header>
-				<!--Icon head card-->
-          		<md-card-avatar>
-            		<md-icon ng-if="movie.media_type == 'tv'" class="md-avatar-icon" md-svg-icon="{{('hardware' | icon:'tv')}}"></md-icon>
-		            <md-icon ng-if="movie.media_type == 'movie' || movie.media_type == undefined" class="md-avatar-icon" md-svg-icon="{{('av' | icon:'movie')}}"></md-icon>
-          		</md-card-avatar>
-          		<!--Type-->
-          		<md-card-header-text>
-          			<span class="md-title colorWhite" ng-if="movie.media_type == 'tv'">Tv</span>
-		            <span class="md-title colorWhite" ng-if="movie.media_type == 'movie' || movie.media_type == undefined">Movie</span>
-		            <span class="md-subhead colorWhite">{{movie.release_date | DateStringToFormat | date: 'MMM yyyy'}}</span>
-          		</md-card-header-text>
-        	</md-card-header>
-        	<!--Image movie - tv-->
-		    <img ng-if="movie.backdrop_path != null" ng-src="http://image.tmdb.org/t/p/w300{{movie.backdrop_path}}" class="height_214 md-card-image" alt="backdrop">
-		    <img ng-if="movie.backdrop_path == null" ng-src="./img/no_image.png" class="height_214 md-card-image" alt="noFound">
-		    <!--Title -->
-		    <md-card-title>
-		        <md-card-title-text class="cut_text">
-		           	<span class="md-headline cut_text colorWhite">{{movie.original_title}}&nbsp;</span>
-		        </md-card-title-text>
-		    </md-card-title>
-		    <!--Description movie-->
-		    <md-card-content class="min_h_70">
-		        <p class="md-subhead colorWhite f_15">
-		        	{{movie.overview.substring(0, 100)}}...
-		        </p>
-		    </md-card-content>
-		    <!--footer card-->
-		    <md-card-actions layout="row" layout-align="end center" class="colorWhite">
-		        <md-button show-morexx ng-model="movie" ui-sref="home.movie({id: movie.id})">Read +</md-button>
-		    </md-card-actions>
-		</md-card>	
+	<div flex-xs flex-gt-xs="50" flex-gt-md="33" layout="column" ng-repeat="movie in listMovies" ng-include="('cardMovie' | url).url" ng-if="ngModel.search == '' || ngModel.searchBy == 'movie'">
+		<!--cardMovie.html-->
+	</div>
+	<!--Movies - actors -->
+	<div flex-xs flex-gt-xs="50" flex-gt-md="25" layout="column" ng-repeat="person in listMovies" ng-include="('cardPerson' | url).url" ng-if="ngModel.search != '' && ngModel.searchBy == 'person'">
+		<!--cardPerson.html-->
 	</div>
 
-	<!--actors -->
-	<div flex-xs flex-gt-xs="50" flex-gt-md="25" layout="column" ng-repeat="person in listMovies | orderBy:'name':ngModel.sortActor" ng-if="ngModel.search != '' && ngModel.actorMovies == ''">
-		<md-card class="cardColor">
-			<!--Head-->
-			<md-card-header>
-				&nbsp;
-        	</md-card-header>
-        	<!--Image person - tv-->
-        	<md-card-avatar layout="row" layout-align="center center">
-        		<div class="divActorImg">
-        			<img ng-if="person.profile_path != null" ng-src="http://image.tmdb.org/t/p/w300{{person.profile_path}}" class="actorImg" alt="profile">
-			    	<img ng-if="person.profile_path == null" ng-src="./img/no_avatar.png" class="actorImg" alt="noFound">
-        		</div>
-			</md-card-avatar>
-		    <!--Title -->
-		    <md-card-title>
-		        <md-card-title-text class="cut_text center">
-		           	<span class="md-headline cut_text colorWhite">{{person.name}}&nbsp;</span>
-		        </md-card-title-text>
-		    </md-card-title>	
-		    <!--footer card-->
-		    <md-card-actions layout="row" class="colorWhite vert_middle">
-			    <md-icon class="colorWhite ml_5 mr_5" md-svg-icon="{{('action' | icon:'favorite')}}"></md-icon>
-			    <span class="ml_5">{{person.popularity | number:0}} K</span>
-			    <span flex></span>
-			    <md-button class="md-icon-button" ng-click="showMoviesActor($event, person);">
-		        	<md-icon class="colorWhite" md-svg-icon="{{('maps' | icon:'local_movies')}}"></md-icon>
-		        </md-button>
-		        <span class="ml-12 mr_5">{{person.known_for.length}}</span>
-		    </md-card-actions>
-		</md-card>	
-	</div>
-
-	<!--list movies actors -->
-	<div flex-xs flex-gt-xs="50" flex-gt-md="33" layout="column" ng-repeat="movie in listMoviesActors | orderBy:'release_date':ngModel.sortMovieActor" ng-if="ngModel.actorMovies != ''">
-		<md-card class="cardColor">
-			<!--Head-->
-			<md-card-header>
-				<!--Icon head card-->
-          		<md-card-avatar>
-            		<md-icon ng-if="movie.media_type == 'tv'" class="md-avatar-icon" md-svg-icon="{{('hardware' | icon:'tv')}}"></md-icon>
-		            <md-icon ng-if="movie.media_type == 'movie' || movie.media_type == undefined" class="md-avatar-icon" md-svg-icon="{{('av' | icon:'movie')}}"></md-icon>
-          		</md-card-avatar>
-          		<!--Type-->
-          		<md-card-header-text>
-          			<span class="md-title colorWhite" ng-if="movie.media_type == 'tv'">Tv</span>
-		            <span class="md-title colorWhite" ng-if="movie.media_type == 'movie' || movie.media_type == undefined">Movie</span>
-		            <span class="md-subhead colorWhite">{{movie.release_date | DateStringToFormat | date: 'MMM yyyy'}}</span>
-          		</md-card-header-text>
-        	</md-card-header>
-        	<!--Image movie - tv-->
-		    <img ng-if="movie.backdrop_path != null" ng-src="http://image.tmdb.org/t/p/w300{{movie.backdrop_path}}" class="height_214 md-card-image" alt="backdrop">
-		    <img ng-if="movie.backdrop_path == null" ng-src="./img/no_image.png" class="height_214 md-card-image" alt="noFound">
-		    <!--Title -->
-		    <md-card-title>
-		        <md-card-title-text class="cut_text">
-		           	<span class="md-headline cut_text colorWhite">{{movie.original_title}}&nbsp;</span>
-		        </md-card-title-text>
-		    </md-card-title>
-		    <!--Description movie-->
-		    <md-card-content class="min_h_70">
-		        <p class="md-subhead colorWhite f_15">
-		        	{{movie.overview.substring(0, 100)}}...
-		        </p>
-		    </md-card-content>
-		    <!--footer card-->
-		    <md-card-actions layout="row" layout-align="end center" class="colorWhite">
-		        <md-button show-more ng-model="movie">Read +</md-button>
-		    </md-card-actions>
-		</md-card>	
-	</div>
 </div>

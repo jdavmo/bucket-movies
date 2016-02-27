@@ -1,0 +1,35 @@
+<md-card class="cardColor">
+	<!--Head-->
+	<md-card-header>
+		<!--Icon head card-->
+  		<md-card-avatar>
+    		<md-icon ng-if="movie.media_type == 'tv'" class="md-avatar-icon" md-svg-icon="{{('hardware' | icon:'tv')}}"></md-icon>
+            <md-icon ng-if="movie.media_type == 'movie' || movie.media_type == undefined" class="md-avatar-icon" md-svg-icon="{{('av' | icon:'movie')}}"></md-icon>
+  		</md-card-avatar>
+  		<!--Type-->
+  		<md-card-header-text>
+  			<span class="md-title colorWhite" ng-if="movie.media_type == 'tv'">Tv</span>
+            <span class="md-title colorWhite" ng-if="movie.media_type == 'movie' || movie.media_type == undefined">Movie</span>
+            <span class="md-subhead colorWhite">{{movie.release_date | DateStringToFormat | date: 'MMM yyyy'}}</span>
+  		</md-card-header-text>
+	</md-card-header>
+	<!--Image movie - tv-->
+    <img ng-if="movie.backdrop_path != null" ng-src="http://image.tmdb.org/t/p/w300{{movie.backdrop_path}}" class="height_214 md-card-image" alt="backdrop">
+    <img ng-if="movie.backdrop_path == null" ng-src="./img/no_image.png" class="height_214 md-card-image" alt="noFound">
+    <!--Title -->
+    <md-card-title>
+        <md-card-title-text class="cut_text">
+           	<span class="md-headline cut_text colorWhite">{{movie.original_title}}&nbsp;</span>
+        </md-card-title-text>
+    </md-card-title>
+    <!--Description movie-->
+    <md-card-content class="min_h_70">
+        <p class="md-subhead colorWhite f_15">
+        	{{movie.overview.substring(0, 100)}}...
+        </p>
+    </md-card-content>
+    <!--footer card-->
+    <md-card-actions layout="row" layout-align="end center" class="colorWhite">
+        <md-button show-morexx ng-model="movie" ui-sref="home.movie({id: movie.id})">Read +</md-button>
+    </md-card-actions>
+</md-card>

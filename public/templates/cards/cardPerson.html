@@ -1,0 +1,29 @@
+<md-card class="cardColor">
+	<!--Head-->
+	<md-card-header>
+		&nbsp;
+	</md-card-header>
+	<!--Image person - tv-->
+	<md-card-avatar layout="row" layout-align="center center">
+		<div class="divActorImg">
+			<img ng-if="person.profile_path != null" ng-src="http://image.tmdb.org/t/p/w300{{person.profile_path}}" class="actorImg" alt="profile">
+	    	<img ng-if="person.profile_path == null" ng-src="./img/no_avatar.png" class="actorImg" alt="noFound">
+		</div>
+	</md-card-avatar>
+    <!--Title -->
+    <md-card-title>
+        <md-card-title-text class="cut_text center">
+           	<span class="md-headline cut_text colorWhite">{{person.name}}&nbsp;</span>
+        </md-card-title-text>
+    </md-card-title>	
+    <!--footer card-->
+    <md-card-actions layout="row" class="colorWhite vert_middle">
+	    <md-icon class="colorWhite ml_5 mr_5" md-svg-icon="{{('action' | icon:'favorite')}}"></md-icon>
+	    <span class="ml_5">{{person.popularity | number:0}} K</span>
+	    <span flex></span>
+	    <md-button class="md-icon-button" ui-sref="home.person({id: person.id})">
+        	<md-icon class="colorWhite" md-svg-icon="{{('maps' | icon:'local_movies')}}"></md-icon>
+        </md-button>
+        <span class="ml-12 mr_5">{{person.known_for.length}}</span>
+    </md-card-actions>
+</md-card>	

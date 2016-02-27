@@ -19,6 +19,9 @@ bucketMovies.filter('url', function() {
             infoMovie:       { clase: '', id: '', url: 'templates/modal/infoMovie.html?i='+i},
             movie:           { clase: '', id: '', url: 'templates/movie/movie.html?i='+i},
             person:          { clase: '', id: '', url: 'templates/person/person.html?i='+i},
+            cardMovie:       { clase: '', id: '', url: 'templates/cards/cardMovie.html?i='+i},
+            cardPerson:      { clase: '', id: '', url: 'templates/cards/cardPerson.html?i='+i},
+            cardTv:          { clase: '', id: '', url: 'templates/cards/cardTv.html?i='+i},
         };
         //return array with the template required
         return urls[id];

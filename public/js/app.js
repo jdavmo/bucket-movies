@@ -62,6 +62,7 @@ bucketMovies.config(function($mdThemingProvider, $stateProvider, $urlRouterProvi
                 'detail': {
                     templateUrl: 'templates/person/person.html?i='+i,
                     controller: function($scope, $state, $stateParams, $filter) {
+                        $scope.viewTransitionDetail = 'detailFullScreen';
                         $scope.person = {template: $filter('url')('person').url, id: $stateParams.id};
                     } 
                 }
