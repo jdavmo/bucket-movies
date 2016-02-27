@@ -1,0 +1,84 @@
+<md-toolbar class="toolbarMain">
+	<div class="md-toolbar-tools">	    		        
+        <h2>
+          	<span>{{personInfo.data.person.name}}</span>
+        </h2>	  
+    </div>      
+</md-toolbar>
+<md-content flex class="transparent" layout-padding>
+	<div layout="row">
+		<div flex="25" layout="column" class="p_20">
+			<div layout="row" layout-align="center center">
+				<!--carousel-->
+				<ul rn-carousel class="m0 bm-carousel personPicture" rn-carousel-auto-slide="5">
+				  	<li ng-repeat="profile in personInfo.data.images.profiles">
+				  		<!--Img carousel-->
+				  		<img ng-src="http://image.tmdb.org/t/p/w300{{profile.file_path}}" alt="carouselImg">
+				  		<!--Title carousel movie-->
+				  	</li>  	
+				</ul>
+    		</div>
+    		<div class="p_20 colorWhite" layout="column">
+    			<h3 class="md-title">Person Facts</h3>
+    			<div class="md-subhead">
+    				<span class="bold">Known Credits:</span>
+    				<span>{{personInfo.data.credits.cast.length}}</span>
+    			</div>
+    			<div class="md-subhead">
+    				<span class="bold">Birthday:</span>
+    				<span>{{personInfo.data.person.birthday | date:'dd MMMM yyyy'}}</span>
+    			</div>
+    			<div class="md-subhead">
+    				<span class="bold">Place of Birth:</span>
+    				<span>{{personInfo.data.person.place_of_birth}}</span>
+    			</div>	    		
+    		</div>
+		</div>
+		<div flex class="colorWhite" layout="column">
+			<div>
+				<h3 class="md-tittle">Biography</h3>
+				<div class="md-subhead" ng-bind-html="personInfo.data.person.biography | unsafe">
+				
+				</div>
+			</div>
+			<div flex class="colorWhite">
+				<h3 class="md-tittle">Known for</h3>
+				<div class="md-subhead" layout="row" layout-wrap>
+					<div ng-repeat="known_for in personInfo.data.known_for">
+						<md-tooltip md-direction="top">
+				          	{{known_for.media.title}}
+				        </md-tooltip>
+						<img ng-if="known_for.media.poster_path != null" ng-src="http://image.tmdb.org/t/p/w300{{known_for.media.poster_path}}" class="listMovImgKnown" alt="{{known_for.media.title}}">
+				        <img ng-if="known_for.media.poster_path == null" ng-src="./img/no_avatar.png" class="listMovImgKnown" alt="{{known_for.media.title}}">
+					</div>
+				</div>
+			</div>
+			<div flex class="colorWhite">
+				<h3 class="md-tittle">Acting</h3>
+				<div class="" layout="column">
+					<md-list flex>
+				      	<md-list-item class="md-3-line" ng-repeat="cast in personInfo.data.credits.cast">
+				        	<img ng-if="cast.poster_path != null" ng-src="http://image.tmdb.org/t/p/w300{{cast.poster_path}}" class="listMovImg" alt="{{cast.title}}">
+				            <img ng-if="cast.poster_path == null" ng-src="./img/no_avatar.png" class="listMovImg" alt="{{cast.title}}">
+				        	<div class="md-list-item-text colorWhite" layout="column" ng-if="cast.media_type == 'movie'">
+				          		<h3 class="colorWhite"><span class="bold">{{cast.title}}</span> <span>(Movie)</span></h3>
+				          		<h4 class="colorWhite">{{cast.release_date | date:'MMM yyyy'}}</h4>
+				          		<p class="colorWhite" ng-if="cast.character != ''">Character: {{ cast.character }}</p>
+				        	</div>
+				        	<div class="md-list-item-text" layout="column" ng-if="cast.media_type == 'tv'">
+				          		<h3 class="colorWhite "><span class="bold">{{cast.name}}</span> <span>(tv)</span></h3>
+				          		<h4 class="colorWhite">{{cast.first_air_date | date:'MMM yyyy'}}</h4>
+				          		<p class="colorWhite">
+				          			<span ng-if="cast.character != ''">Character: {{ cast.character }}</span>
+				          			<span ng-if="cast.character != ''">&nbsp;&bull;&nbsp;</span>
+				          			<span ng-if="cast.episode_count > 0">Episodes: {{ cast.episode_count }}</span>
+				          		</p>
+				        	</div>
+				        	<md-divider class="btWhite"></md-divider>
+				      	</md-list-item>
+				    </md-list>
+				</div>
+			</div>
+		</div>			
+	</div>
+</md-content>

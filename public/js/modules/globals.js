@@ -132,4 +132,35 @@ BMGlobals.service('globalServices', function globalServices($http, $q, $mdDialog
         
     }
 
+    globalServices.orderImgTags = function(rows)
+    {        
+        var array = {};
+        //count positions for each array
+        var cant = rows.length;
+
+        //if the first array is empty retun the array 2
+        if(cant == 0){
+            return rows;
+        }
+
+        //if array content data
+        if(cant > 0)
+        {    
+            angular.forEach(rows, function(value, key) 
+            {                
+
+                if(array[value.media.id] == undefined)
+                {
+                    array[value.media.id] = value;
+                }
+
+            });
+
+            return array;
+
+        }
+        
+    }
+    
+
 });

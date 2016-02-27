@@ -17,6 +17,7 @@ img 			{width: 100%;}
 .div_search		{margin-left: 15px;margin-right: 0px;}
 .delay 			{transition: all 0.3s ease-in-out;}
 .mt_60 			{margin-top:60px;}
+.p_20 			{padding:20px;}
 .center         {text-align: center;}
 .width_250      {width:250px;}
 .vert_middle    {align-items: center;-webkit-align-items: center; /* Safari 7.0+ */}
@@ -30,6 +31,16 @@ img 			{width: 100%;}
 .searchIcon     {position: absolute;top: 5px;left: 7px;}
 .absolute       {position: absolute;}
 .relative       {position: relative;}
+.bold           {font-weight: bold;}
+.btWhite     	{border-top-color: rgba(255,255,255,0.12);}
+.listMovImg     {width: 44px;margin-top: 11px;margin-right: 13px;}
+.listMovImgKnown{width: 100px;margin-top: 11px;margin-right: 13px;}
+
+.personPicture  {width: 185px;
+    			 height: 269px;
+    			 max-height: 269px;
+    			 min-height: 269px !important;
+    			}
  
 .divActorImg{    
 	border-radius: 50%;
@@ -46,7 +57,7 @@ img 			{width: 100%;}
     top: 0;
     right: 0;
     z-index: 21;
-    background: transparent;
+    background-color: rgba(0,0,0, 0.9) !important;
 }
 
 #loading-bar-spinner .spinner-icon {

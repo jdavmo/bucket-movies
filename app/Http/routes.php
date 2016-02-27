@@ -33,4 +33,7 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('listMovies', 'Movies\MoviesController@listMovies'); 
 	//get data movie && and credits
 	Route::post('getMovie', 'Movies\MoviesController@getMovie');
+	//get data person
+	Route::post('getPerson', 'Movies\MoviesController@getPerson');
+	
 });

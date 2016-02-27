@@ -2,6 +2,7 @@
 var bucketMovies = angular.module('bucketMovies', ['ngAria',
                                  'ngMaterial',
                                  'ngAnimate',
+                                 'ngSanitize',
                                  'ui.router',
                                  'ct.ui.router.extras',
                                  'anim-in-out',
@@ -63,7 +64,7 @@ bucketMovies.config(function($mdThemingProvider, $stateProvider, $urlRouterProvi
                     templateUrl: 'templates/person/person.html?i='+i,
                     controller: function($scope, $state, $stateParams, $filter) {
                         $scope.viewTransitionDetail = 'detailFullScreen';
-                        $scope.person = {template: $filter('url')('person').url, id: $stateParams.id};
+                        $scope.person = {template: $filter('url')('personContent').url, id: $stateParams.id};
                     } 
                 }
             }

@@ -269,3 +269,38 @@ BMovies.directive('getMovie', function(globalServices) {
         }
     }
 });
+
+/*
+|   Directive for call the movie info and credits
+|   This directive need the ng-model with the data movie
+|   get-movie ng-model="dataMovie"
+|   @attribute ng-model 
+|   @return
+|*/
+BMovies.directive('personInfo', function(globalServices) {
+    return {
+        restrict : 'AE',
+        scope: {
+            ngModelPerson: '=ngModel'
+        },
+        link: function (scope, element, attrs, ngModelCtrl) { 
+
+            scope.personInfo = {url: scope.ngModelPerson.template, data: ''}
+
+            //services global for request
+            globalServices.globalRequest('/getPerson', {id: scope.ngModelPerson.id})
+            .then(function(res){
+                //server return ok
+                if(res.validation == 'ok')
+                {
+                    //the scope with the result data person
+                    scope.personInfo.data           = res.data;
+                    scope.personInfo.data.known_for = globalServices.orderImgTags(res.data.tagImgs.results);
+                    //scope.ngModelPerson.dataCredits   = res.credits;                                        
+                }                                
+            }); 
+
+        },
+        template: '<div ng-include="personInfo.url" layout="column" layout-fill></div>'
+    }
+});
