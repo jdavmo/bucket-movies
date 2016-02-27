@@ -65,7 +65,7 @@ BMovies.directive('listMovies', function($location, $filter, $timeout, globalSer
             scope.listMoviesActors  = [];
             
             //function for call list
-            function BMlist(append_search)
+            function BMlist(append_search, searchBy)
             {
                 var enter = 0;
 
@@ -111,6 +111,7 @@ BMovies.directive('listMovies', function($location, $filter, $timeout, globalSer
                     var array               = {};
                     array['page']           = page;
                     array['search']         = scope.ngModel.search;
+                    array['searchBy']       = searchBy;
                     
                     //services global for request
                     globalServices.globalRequest('/listMovies',array)
@@ -136,7 +137,7 @@ BMovies.directive('listMovies', function($location, $filter, $timeout, globalSer
             */
             element.bind('scroll', function () {
                 if(element[0].scrollHeight - element[0].scrollTop  == element[0].getBoundingClientRect().height) {
-                    BMlist('');
+                    BMlist('', scope.ngModel.searchBy);
                 }
             });
 
@@ -147,13 +148,21 @@ BMovies.directive('listMovies', function($location, $filter, $timeout, globalSer
             var tempFilterText = '',filterTextTimeout;
             scope.$watch('ngModel.search', function(current, old){
 
+
                 if (filterTextTimeout) $timeout.cancel(filterTextTimeout);
 
                 tempFilterText      = current;
 
                 filterTextTimeout   = $timeout(function() {
                     scope.ngModel.search = tempFilterText;                    
-                    BMlist('search');
+                    if(current == '' && old != '')
+                    {
+                        BMlist('search', '');
+                    }
+                    else if (current != '')
+                    {
+                        BMlist('search', scope.ngModel.searchBy);
+                    }
                 }, 1000); // delay 250 ms                               
 
             })
@@ -170,6 +179,8 @@ BMovies.directive('listMovies', function($location, $filter, $timeout, globalSer
                 //set array with the movies
                 scope.listMoviesActors    = person.known_for;
             }
+
+            BMlist('search', '');
             
         },
         //include template

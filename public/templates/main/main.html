@@ -14,10 +14,31 @@
 	        <!--icon search-->
 	        <span>
 	        	<md-icon md-svg-icon="{{('action' | icon:'search')}}"></md-icon>
+	        	<md-menu>
+			      	<md-button aria-label="opens option search" class="md-icon-button m0" ng-click="$mdOpenMenu($event)">
+			        	<md-icon md-menu-origin md-svg-icon="{{('navigation' | icon:'arrow_drop_down')}}"></md-icon>
+			      	</md-button>
+			      	<md-menu-content width="4" class="blackMate">
+			        	<md-menu-item>
+			          		<md-button ng-click="listMovies.searchPlaceholder = 'Search by Person';listMovies.searchBy = 'person';">
+			            		<md-icon class="colorWhite" md-svg-icon="{{('social' | icon:'person')}}" md-menu-align-target></md-icon>
+			            		<span class="colorWhite">Search by Person</span>
+			          		</md-button>
+			        	</md-menu-item>
+			        	<md-menu-item>
+			          		<md-button ng-click="listMovies.searchPlaceholder = 'Search by Movie';listMovies.searchBy = 'movie';">
+			            		<md-icon class="colorWhite" md-svg-icon="{{('av' | icon:'movie')}}"></md-icon>
+			            		<span class="colorWhite">Search by Movie</span>
+			          		</md-button>
+			        	</md-menu-item>
+			      	</md-menu-content>
+			    </md-menu>
 	        </span>
 	        <!--search-->
-	        <span flex class="div_search">
-	        	<input type="text" class="search" placeholder="Search" id="search" ng-model="listMovies.search">
+	        <span flex class="div_search relative">
+	        	<md-icon class="colorWhite searchIcon" ng-if="listMovies.searchBy == 'person'" md-svg-icon="{{('social' | icon:'person')}}"></md-icon>
+	        	<md-icon class="colorWhite searchIcon" ng-if="listMovies.searchBy == 'movie'" md-svg-icon="{{('av' | icon:'movie')}}"></md-icon>
+	        	<input type="text" class="search" placeholder="{{listMovies.searchPlaceholder}}" id="search" ng-model="listMovies.search">
 	        </span>
 	        <!--clean search-->
 	        <span flex="10">	        	
@@ -32,3 +53,9 @@
 		<!--carousel - toolbar - List-->
 	</md-content>
 </md-content>
+
+<div ui-view="detail" 
+	 class="anim-in-out anim-slide-right anim-fade {{viewTransitionDetail}}" 
+	 data-anim-sync="true" 
+	 data-anim-speed="300">
+</div>

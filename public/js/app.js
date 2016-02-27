@@ -32,7 +32,39 @@ bucketMovies.config(function($mdThemingProvider, $stateProvider, $urlRouterProvi
             templateUrl: "templates/main/main.html?i="+i,
             controller: function($scope, $state, $stateParams, $filter) {
                 //scope for directive list-movies               
-                $scope.listMovies = {template: $filter('url')('listMovies').url, page: 0, pages: 0, search: '', sortActor: true, sortMovieActor: true, actorMovies: ''};                
+                $scope.listMovies = {template: $filter('url')('listMovies').url, 
+                                     page: 0, 
+                                     pages: 0, 
+                                     search: '',
+                                     searchBy: 'person',
+                                     searchPlaceholder: 'Search by person',
+                                     sortActor: true, 
+                                     sortMovieActor: true, 
+                                     actorMovies: ''
+                                    };                
             }      
-        });
-});        
+        })        
+        .state('home.movie', {
+            url: 'movie/:id',
+            views: {
+                'detail': {
+                    templateUrl: 'templates/movie/movie.html?i='+i,
+                    controller: function($scope, $state, $stateParams, $filter) {
+                        $scope.viewTransitionDetail = 'detailFullScreen';
+                        $scope.movie = {template: $filter('url')('movie').url, id: $stateParams.id};                
+                    } 
+                }
+            }
+        })
+        .state('home.person', {
+            url: 'person/:id',
+            views: {
+                'detail': {
+                    templateUrl: 'templates/person/person.html?i='+i,
+                    controller: function($scope, $state, $stateParams, $filter) {
+                        $scope.person = {template: $filter('url')('person').url, id: $stateParams.id};
+                    } 
+                }
+            }
+        })
+});
