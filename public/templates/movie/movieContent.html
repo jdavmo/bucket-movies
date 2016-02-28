@@ -24,18 +24,42 @@
     		</div>
     		<div class="p_20 colorWhite" layout="column">
     			<h3 class="md-title">Movie Facts</h3>
-    			<div class="md-subhead">
-    				<span class="bold">Known Credits:</span>
-    				<span>{{movieInfo.data.credits.cast.length + movieInfo.data.credits.crew.length}}</span>
+    			<div class="md-subhead" ng-if="movieInfo.data.person.release_date != ''" layout="column">
+    				<span class="bold">Release date</span>
+    				<div class="mt_5 mb_5">{{movieInfo.data.movie.release_date | date:'dd MMMM yyyy'}}</div>
     			</div>
-    			<div class="md-subhead" ng-if="movieInfo.data.person.birthday != ''">
-    				<span class="bold">Birthday:</span>
-    				<span>{{movieInfo.data.person.birthday | date:'dd MMMM yyyy'}}</span>
+    			<div class="md-subhead" layout="column">
+    				<span class="bold">Language</span>
+    				<div class="mt_5 mb_5">
+    					<span class="md-subhead f_15" ng-repeat="spoken in movieInfo.data.movie.spoken_languages">{{spoken.name}}<span ng-if="!$last">, </span></span>
+    				</div>
     			</div>
-    			<div class="md-subhead" ng-if="movieInfo.data.person.place_of_birth != ''">
-    				<span class="bold">Place of Birth:</span>
-    				<span>{{movieInfo.data.person.place_of_birth}}</span>
-    			</div>	    		
+    			<div class="md-subhead" layout="column">
+    				<span class="bold">Production companies</span>
+    				<div class="mt_5 mb_5">
+    					<span class="md-subhead f_15" ng-repeat="company in movieInfo.data.movie.production_companies">{{company.name}}<span ng-if="!$last">, </span></span>
+    				</div>
+    			</div>
+    			<div class="md-subhead" layout="column">
+    				<span class="bold">Production countries</span>
+    				<div class="mt_5 mb_5">
+    					<span class="md-subhead f_15" ng-repeat="country in movieInfo.data.movie.production_countries">{{country.name}}<span ng-if="!$last">, </span></span>
+    				</div>
+    			</div>
+    			<div class="md-subhead" layout="column">
+    				<span class="bold">Genres</span>
+    				<div class="mt_5 mb_5">
+    					<span class="md-subhead f_15" ng-repeat="genre in movieInfo.data.movie.genres">{{genre.name}}<span ng-if="!$last">, </span></span>
+    				</div>
+    			</div>
+    			<div class="md-subhead" layout="column">
+    				<span class="bold">Trailers</span>
+    				<div class="mt_5 mb_5" layout="column">
+    					<a class="md-subhead f_15 cursor underline" show-trailer ng-model="trailer" ng-repeat="trailer in movieInfo.data.trailers.youtube">
+    						{{trailer.name}}
+    					</a>
+    				</div>
+    			</div>
     		</div>
 		</div>
 		<div flex class="colorWhite" layout="column">
@@ -65,14 +89,35 @@
 				<div layout="row" class="vert_middle">
 					<div>
 						Sort By 
+						<span ng-if="ngModelMovie.sortBy == 'chronological'">Chronological</span>
 						<span ng-if="ngModelMovie.sortBy == 'name'">Name</span>
 					</div>
-					
 					<div>
-						<md-button class="md-icon-button" aria-label="sortMovie" ng-click="sortCredits($event, true);" ng-if="ngModelMovie.sort == false">
+						<md-menu>
+					      	<md-button aria-label="opens option search" class="md-icon-button m0" ng-click="$mdOpenMenu($event)">
+					        	<md-icon class="colorWhite" md-menu-origin md-svg-icon="{{('navigation' | icon:'arrow_drop_down')}}"></md-icon>
+					      	</md-button>
+					      	<md-menu-content width="4" class="blackMate">	
+					      		<md-menu-item>
+					          		<md-button ng-click="ngModelMovie.sortBy = 'chronological';sortCredits($event, ngModelMovie.sort);">
+					            		<md-icon class="colorWhite" md-svg-icon="{{('av' | icon:'movie')}}"></md-icon>
+					            		<span class="colorWhite">Chronological</span>
+					          		</md-button>
+					        	</md-menu-item>				        	
+					        	<md-menu-item>
+					          		<md-button ng-click="ngModelMovie.sortBy = 'name';sortCredits($event, ngModelMovie.sort);">
+					            		<md-icon class="colorWhite" md-svg-icon="{{('av' | icon:'movie')}}"></md-icon>
+					            		<span class="colorWhite">Name</span>
+					          		</md-button>
+					        	</md-menu-item>
+					      	</md-menu-content>
+					    </md-menu>
+					</div>
+					<div>
+						<md-button class="md-icon-button" aria-label="sortActor" ng-click="sortCredits($event, true);" ng-if="ngModelMovie.sort == false">
 				          	<md-icon class="colorWhite" md-svg-icon="{{('navigation' | icon:'arrow_upward')}}" ></md-icon>
 				        </md-button>        
-				        <md-button class="md-icon-button" aria-label="sortMovie" ng-click="sortCredits($event, false);" ng-if="ngModelMovie.sort == true">
+				        <md-button class="md-icon-button" aria-label="sortActor" ng-click="sortCredits($event, false);" ng-if="ngModelMovie.sort == true">
 				          	<md-icon class="colorWhite" md-svg-icon="{{('navigation' | icon:'arrow_downward')}}"></md-icon>
 				        </md-button>
 					</div>

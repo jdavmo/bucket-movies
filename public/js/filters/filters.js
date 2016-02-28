@@ -16,7 +16,7 @@ bucketMovies.filter('url', function() {
         {
             headCarousel:    { class: '', id: '', url: 'templates/head/headCarousel.html?i='+i},
             listMovies:      { class: '', id: '', url: 'templates/list/listMovies.html?i='+i},
-            infoMovie:       { class: '', id: '', url: 'templates/modal/infoMovie.html?i='+i},
+            trailerMovie:    { class: '', id: '', url: 'templates/modal/trailerMovie.html?i='+i},
             cardMovie:       { class: '', id: '', url: 'templates/cards/cardMovie.html?i='+i},
             cardPerson:      { class: '', id: '', url: 'templates/cards/cardPerson.html?i='+i},
             cardTv:          { class: '', id: '', url: 'templates/cards/cardTv.html?i='+i},

@@ -9,6 +9,8 @@ img 			{width: 100%;}
 .colorWhite		{color: rgba(255,255,255, 0.7) !important;}
 .f_15			{font-size: 15px !important;}
 .mt_8			{margin-top: 8px;}
+.mt_5			{margin-top: 5px;}
+.mb_5			{margin-bottom: 5px;}
 .mt_10 			{margin-top:10px;}
 .min_h_70		{min-height: 70px;}
 .width_100		{width: 100% !important;}
@@ -35,6 +37,7 @@ img 			{width: 100%;}
 .btWhite     	{border-top-color: rgba(255,255,255,0.12);}
 .listMovImg     {width: 44px;margin-top: 11px;margin-right: 13px;}
 .listMovImgKnown{width: 100px;margin-top: 11px;margin-right: 13px;}
+.underline:hover{text-decoration: underline;}
 
 .personPicture  {width: 185px;
     			 height: 269px;

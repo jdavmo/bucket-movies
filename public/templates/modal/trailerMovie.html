@@ -1,0 +1,21 @@
+<md-dialog aria-label="Movie Info" ng-cloak flex="50" flex-sm="100" flex-xs="100" class="blackMateModal">    
+    <!--head toobar modal-->
+    <md-toolbar class="z_index_2 relative toolbarMain" layout="row">
+        <h2 flex class="md-toolbar-tools colorWhite" layout="row">
+            <!--title movie-->
+            <div>
+                {{dataTrailer.name}}
+            </div>
+            <div flex></div>
+            <!--close modal-->
+            <md-button class="md-icon-button" aria-label="close" close-modal>
+                <md-icon md-svg-icon="{{('navigation' | icon:'close')}}"></md-icon>
+            </md-button>
+        </h2>          
+    </md-toolbar>
+    <md-dialog-content layout-padding>
+        <div layout="row" layout-sm="column" layout-xs="column" class="colorWhite">
+            <iframe width="800" height="400" ng-src="{{getIframeSrc(dataTrailer.source)}}" frameborder="0" allowfullscreen></iframe>
+        </div>        
+    </md-dialog-content>    
+</md-dialog>

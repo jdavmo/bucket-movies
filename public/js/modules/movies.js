@@ -196,11 +196,11 @@ BMovies.directive('listMovies', function($location, $filter, $timeout, globalSer
 |   @attribute ng-model 
 |   @return
 |*/
-BMovies.directive('showMore', function($mdDialog, $filter) {
+BMovies.directive('showTrailer', function($mdDialog, $filter, $sce) {
     return {
         restrict : 'AE',
         scope: {
-          ngModel: '=ngModel'
+          ngModelTrailer: '=ngModel'
         },
         link: function (scope, element, attrs, ngModelCtrl) {            
 
@@ -209,25 +209,29 @@ BMovies.directive('showMore', function($mdDialog, $filter) {
 
                 //call the material modal
                 $mdDialog.show({
-                    controller: dialogCtrMovie,//require controller
-                    templateUrl: $filter('url')('infoMovie').url,//template
+                    controller: dialogCtrTrailer,//require controller
+                    templateUrl: $filter('url')('trailerMovie').url,//template
                     parent: angular.element(document.body),//injection
                     targetEvent: events,//event click
                     clickOutsideToClose:true,//this modal will close when the user make click otside
-                    locals: {data: scope.ngModel}//here sent the data movie to controller
+                    locals: {data: scope.ngModelTrailer}//here sent the data movie to controller
                 })
                 events.stopPropagation();
             });
 
             //controller modal
-            function dialogCtrMovie(scope, locals) {
+            function dialogCtrTrailer(scope, locals) {
                 
                 //the controller init here
                 scope.init = function()
                 {            
                     //scope with the data movie       
-                    scope.dataMovie = {dataInit: locals.data, dataMovie: '', dataCredits: ''};
-                };                
+                    scope.dataTrailer = locals.data;
+                };    
+
+                scope.getIframeSrc = function (videoId) {
+                    return $sce.trustAsResourceUrl('https://www.youtube.com/embed/' + videoId);
+                };            
 
                 //calling the function init
                 scope.init();
@@ -303,8 +307,17 @@ BMovies.directive('movieInfo', function(globalServices, $filter) {
 
                 scope.ngModelMovie.sort = sort;
 
-                scope.movieInfo.data.credits.cast = $filter('orderBy')(scope.movieInfo.data.credits.cast, 'name', sort)
-                scope.movieInfo.data.credits.crew = $filter('orderBy')(scope.movieInfo.data.credits.crew, 'name', sort)
+                switch(scope.ngModelMovie.sortBy)
+                {
+                    case'chronological':
+                        scope.movieInfo.data.credits.cast = $filter('orderBy')(scope.movieInfo.data.credits.cast, 'order', sort)
+                        //scope.movieInfo.data.credits.crew = $filter('orderBy')(scope.movieInfo.data.credits.crew, 'dateO', sort)
+                    break;
+                    case'name':
+                        scope.movieInfo.data.credits.cast = $filter('orderBy')(scope.movieInfo.data.credits.cast, 'name', sort)
+                        scope.movieInfo.data.credits.crew = $filter('orderBy')(scope.movieInfo.data.credits.crew, 'name', sort)
+                    break;
+                }
 
             }
 
@@ -414,7 +427,6 @@ BMovies.directive('movieCastCrew', function(globalServices, $filter) {
             switch(scope.typeCastCrew)
             {
                 case'Cast':                    
-                console.log(scope.ngModelMovieCastCrew)
                     scope.castCrew = {url: $filter('url')('movieCast').url, data: scope.ngModelMovieCastCrew, filter: ''};
                 break;
                 case'Production':

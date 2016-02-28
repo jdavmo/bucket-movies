@@ -21,9 +21,8 @@
 	    <md-icon class="colorWhite ml_5 mr_5" md-svg-icon="{{('action' | icon:'favorite')}}"></md-icon>
 	    <span class="ml_5">{{person.popularity | number:0}} K</span>
 	    <span flex></span>
-	    <md-button class="md-icon-button" ui-sref="home.person({id: person.id})">
-        	<md-icon class="colorWhite" md-svg-icon="{{('maps' | icon:'local_movies')}}"></md-icon>
+	    <md-button ui-sref="home.person({id: person.id})">
+        	Read +
         </md-button>
-        <span class="ml-12 mr_5">{{person.known_for.length}}</span>
     </md-card-actions>
 </md-card>	
