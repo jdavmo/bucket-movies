@@ -1,0 +1,115 @@
+<md-toolbar class="toolbarMain">
+	<div class="md-toolbar-tools">	    		        
+        <h2>
+          	<span>{{movieInfo.data.movie.title}}</span>
+        </h2>	  
+        <div flex></div>
+        <md-button class="md-icon-button" aria-label="close" ui-sref="home()">
+        	<md-icon md-svg-icon="{{('navigation' | icon:'close')}}"></md-icon>
+    	</md-button>
+    </div>      
+</md-toolbar>
+<md-content flex class="transparent" layout-padding>
+	<div layout="row">
+		<div flex="25" layout="column" class="p_20">
+			<div layout="row" layout-align="center center">
+				<!--carousel-->
+				<ul rn-carousel class="m0 bm-carousel personPicture" rn-carousel-auto-slide="5">
+				  	<li ng-repeat="poster in movieInfo.data.images.posters">
+				  		<!--Img carousel-->
+				  		<img ng-src="http://image.tmdb.org/t/p/w300{{poster.file_path}}" alt="carouselImg">
+				  		<!--Title carousel movie-->
+				  	</li>  	
+				</ul>
+    		</div>
+    		<div class="p_20 colorWhite" layout="column">
+    			<h3 class="md-title">Movie Facts</h3>
+    			<div class="md-subhead">
+    				<span class="bold">Known Credits:</span>
+    				<span>{{movieInfo.data.credits.cast.length + movieInfo.data.credits.crew.length}}</span>
+    			</div>
+    			<div class="md-subhead" ng-if="movieInfo.data.person.birthday != ''">
+    				<span class="bold">Birthday:</span>
+    				<span>{{movieInfo.data.person.birthday | date:'dd MMMM yyyy'}}</span>
+    			</div>
+    			<div class="md-subhead" ng-if="movieInfo.data.person.place_of_birth != ''">
+    				<span class="bold">Place of Birth:</span>
+    				<span>{{movieInfo.data.person.place_of_birth}}</span>
+    			</div>	    		
+    		</div>
+		</div>
+		<div flex class="colorWhite" layout="column">
+			<div>
+				<h3 class="md-tittle">Overview</h3>
+				<div class="md-subhead" ng-bind-html="movieInfo.data.movie.overview | unsafe" ng-if="movieInfo.data.movie.overview != ''">
+				
+				</div>
+				<div class="md-subhead" ng-if="movieInfo.data.movie.overview == ''">
+					No one has entered a Overview for this movie.
+				</div>
+			</div>
+			<div flex class="colorWhite">
+				<h3 class="md-tittle">Similar movies...</h3>
+				<div class="md-subhead" layout="row" layout-wrap>
+					<div ng-repeat="similar in movieInfo.data.similar.results" class="cursor" ui-sref="home.movie({id: similar.id})">
+						<md-tooltip md-direction="top">
+				          	{{similar.title}}
+				        </md-tooltip>
+						<img ng-if="similar.poster_path != null" ng-src="http://image.tmdb.org/t/p/w300{{similar.poster_path}}" class="listMovImgKnown" alt="{{similar.title}}">
+				        <img ng-if="similar.poster_path == null" ng-src="./img/no_avatar.png" class="listMovImgKnown" alt="{{similar.title}}">
+					</div>
+				</div>
+			</div>
+			<div layout="row" class="vert_middle">
+				<div flex></div>
+				<div layout="row" class="vert_middle">
+					<div>
+						Sort By 
+						<span ng-if="ngModelMovie.sortBy == 'name'">Name</span>
+					</div>
+					
+					<div>
+						<md-button class="md-icon-button" aria-label="sortMovie" ng-click="sortCredits($event, true);" ng-if="ngModelMovie.sort == false">
+				          	<md-icon class="colorWhite" md-svg-icon="{{('navigation' | icon:'arrow_upward')}}" ></md-icon>
+				        </md-button>        
+				        <md-button class="md-icon-button" aria-label="sortMovie" ng-click="sortCredits($event, false);" ng-if="ngModelMovie.sort == true">
+				          	<md-icon class="colorWhite" md-svg-icon="{{('navigation' | icon:'arrow_downward')}}"></md-icon>
+				        </md-button>
+					</div>
+				</div>
+			</div>
+			<div flex class="colorWhite" ng-repeat="cast in [movieInfo.data.credits.cast]">
+				<h3 class="md-tittle">Casts</h3>
+				<div layout="column">
+					<md-list flex movie-cast-crew="Cast" ng-model="cast" >
+				        <!--movieCast.html-->				      	
+				    </md-list>
+				</div>
+			</div>
+			<div flex class="colorWhite" ng-repeat="crew in [movieInfo.data.credits.crew]">
+				<h3 class="md-tittle">Production</h3>
+				<div layout="column" >
+					<md-list flex movie-cast-crew="Production" ng-model="crew">				      	
+				        <!--movieCrew.html-->				        					      	
+				    </md-list>
+				</div>
+			</div>
+			<div flex class="colorWhite" ng-repeat="crew in [movieInfo.data.credits.crew]">
+				<h3 class="md-tittle">Writing</h3>
+				<div layout="column">
+					<md-list flex movie-cast-crew="Writing" ng-model="crew">				      	
+				        <!--movieCrew.html-->					      	
+				    </md-list>
+				</div>
+			</div>
+			<div flex class="colorWhite" ng-repeat="crew in [movieInfo.data.credits.crew]">
+				<h3 class="md-tittle">Directing</h3>
+				<div layout="column">
+					<md-list flex movie-cast-crew="Directing" ng-model="crew">				      	
+				        <!--movieCrew.html-->				        					      	
+				    </md-list>
+				</div>
+			</div>
+		</div>			
+	</div>
+</md-content>

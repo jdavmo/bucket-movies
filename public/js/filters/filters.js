@@ -14,15 +14,18 @@ bucketMovies.filter('url', function() {
         //var urls: save the urls templates
         var urls =
         {
-            headCarousel:    { clase: '', id: '', url: 'templates/head/headCarousel.html?i='+i},
-            listMovies:      { clase: '', id: '', url: 'templates/list/listMovies.html?i='+i},
-            infoMovie:       { clase: '', id: '', url: 'templates/modal/infoMovie.html?i='+i},
-            cardMovie:       { clase: '', id: '', url: 'templates/cards/cardMovie.html?i='+i},
-            cardPerson:      { clase: '', id: '', url: 'templates/cards/cardPerson.html?i='+i},
-            cardTv:          { clase: '', id: '', url: 'templates/cards/cardTv.html?i='+i},
-            personContent:   { clase: '', id: '', url: 'templates/person/personContent.html?i='+i},
-            personCrew:      { clase: '', id: '', url: 'templates/person/personCrew.html?i='+i},
-            personActing:    { clase: '', id: '', url: 'templates/person/personActing.html?i='+i},
+            headCarousel:    { class: '', id: '', url: 'templates/head/headCarousel.html?i='+i},
+            listMovies:      { class: '', id: '', url: 'templates/list/listMovies.html?i='+i},
+            infoMovie:       { class: '', id: '', url: 'templates/modal/infoMovie.html?i='+i},
+            cardMovie:       { class: '', id: '', url: 'templates/cards/cardMovie.html?i='+i},
+            cardPerson:      { class: '', id: '', url: 'templates/cards/cardPerson.html?i='+i},
+            cardTv:          { class: '', id: '', url: 'templates/cards/cardTv.html?i='+i},
+            personContent:   { class: '', id: '', url: 'templates/person/personContent.html?i='+i},
+            personCrew:      { class: '', id: '', url: 'templates/person/personCrew.html?i='+i},
+            personActing:    { class: '', id: '', url: 'templates/person/personActing.html?i='+i},
+            movieContent:    { class: '', id: '', url: 'templates/movie/movieContent.html?i='+i},
+            movieCast:       { class: '', id: '', url: 'templates/movie/movieCast.html?i='+i},
+            movieCrew:       { class: '', id: '', url: 'templates/movie/movieCrew.html?i='+i},
         };
         //return array with the template required
         return urls[id];

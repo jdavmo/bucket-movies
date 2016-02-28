@@ -132,8 +132,12 @@ class MoviesController extends Controller
             $movie   = Tmdb::getMoviesApi()->getMovie($id);
             //get credits
             $credits = Tmdb::getMoviesApi()->getCredits($id);
-            //return validation ok with the movie and credits
-            return array('validation' => 'ok', 'movie' => $movie, 'credits' => $credits);
+            $images  = Tmdb::getMoviesApi()->getImages($id);
+            $trailers= Tmdb::getMoviesApi()->getTrailers($id);
+            $similar = Tmdb::getMoviesApi()->getSimilar($id);
+
+            //return validation ok with the movie 
+            return array('validation' => 'ok', 'data' => ['movie' => $movie, 'credits' => $credits, 'images' => $images, 'trailers' => $trailers, 'similar' => $similar]);
 
         } catch (Exception $e) {
             //return validation fail with the error

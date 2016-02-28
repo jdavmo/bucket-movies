@@ -1,0 +1,14 @@
+<md-list-item ui-sref="home.person({id: cast.id})" class="md-3-line" ng-repeat="cast in castCrew.data">
+	<img ng-if="cast.profile_path != null" ng-src="http://image.tmdb.org/t/p/w300{{cast.profile_path}}" class="listMovImg" alt="{{cast.name}}">
+	<img ng-if="cast.profile_path == null" ng-src="./img/no_avatar.png" class="listMovImg" alt="{{cast.name}}">
+
+	<div class="md-list-item-text colorWhite" layout="column">
+			<h3 class="colorWhite">
+				<span class="bold">{{cast.name}}
+			</h3>
+			<p class="colorWhite" ng-if="cast.character != ''">
+				Character: {{ cast.character }}
+			</p>
+	</div>
+	<md-divider class="btWhite"></md-divider>
+</md-list-item>

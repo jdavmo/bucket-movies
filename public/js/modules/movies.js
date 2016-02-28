@@ -270,6 +270,49 @@ BMovies.directive('getMovie', function(globalServices) {
     }
 });
 
+BMovies.directive('movieInfo', function(globalServices, $filter) {
+    return {
+        restrict : 'AE',
+        scope: {
+            ngModelMovie: '=ngModel'
+        },
+        link: function (scope, element, attrs, ngModelCtrl) { 
+
+            scope.movieInfo = {url: scope.ngModelMovie.template, data: ''}
+
+            //services global for request
+            globalServices.globalRequest('/getMovie', {id: scope.ngModelMovie.id})
+            .then(function(res){
+                //server return ok
+                if(res.validation == 'ok')
+                {
+                    //the scope with the result data person
+                    scope.movieInfo.data                = res.data;
+                    scope.movieInfo.data.credits.cast   = globalServices.setSortFiels(res.data.credits.cast);
+                    scope.movieInfo.data.credits.crew   = globalServices.setSortFiels(res.data.credits.crew);
+
+                    //scope.movieInfo.data.known_for      = globalServices.orderImgTags(res.data.tagImgs.results);
+
+                    scope.sortCredits('', scope.ngModelMovie.sort);
+                                                           
+                }                                
+            }); 
+
+            scope.sortCredits = function($event, sort)
+            {
+
+                scope.ngModelMovie.sort = sort;
+
+                scope.movieInfo.data.credits.cast = $filter('orderBy')(scope.movieInfo.data.credits.cast, 'name', sort)
+                scope.movieInfo.data.credits.crew = $filter('orderBy')(scope.movieInfo.data.credits.crew, 'name', sort)
+
+            }
+
+        },
+        template: '<div ng-include="movieInfo.url" layout="column" layout-fill></div>'
+    }
+});
+
 /*
 |   Directive for call the movie info and credits
 |   This directive need the ng-model with the data movie
@@ -341,7 +384,7 @@ BMovies.directive('personCastCrew', function(globalServices, $filter) {
             typeCastCrew: '@personCastCrew'
         },
         link: function (scope, element, attrs, ngModelCtrl) { 
-            
+
             switch(scope.typeCastCrew)
             {
                 case'Acting':
@@ -351,6 +394,33 @@ BMovies.directive('personCastCrew', function(globalServices, $filter) {
                 case'Writing':
                 case'Directing':
                     scope.castCrew = {url: $filter('url')('personCrew').url, data: scope.ngModelPersonCastCrew, filter: scope.typeCastCrew};
+                break;
+            }                        
+
+        },
+        template: '<div ng-include="castCrew.url"></div>'
+    }
+});
+
+BMovies.directive('movieCastCrew', function(globalServices, $filter) {
+    return {
+        restrict : 'AE',
+        scope: {
+            ngModelMovieCastCrew: '=ngModel',
+            typeCastCrew: '@movieCastCrew'
+        },
+        link: function (scope, element, attrs, ngModelCtrl) { 
+
+            switch(scope.typeCastCrew)
+            {
+                case'Cast':                    
+                console.log(scope.ngModelMovieCastCrew)
+                    scope.castCrew = {url: $filter('url')('movieCast').url, data: scope.ngModelMovieCastCrew, filter: ''};
+                break;
+                case'Production':
+                case'Writing':
+                case'Directing':
+                    scope.castCrew = {url: $filter('url')('movieCrew').url, data: scope.ngModelMovieCastCrew, filter: scope.typeCastCrew};
                 break;
             }                        
 
