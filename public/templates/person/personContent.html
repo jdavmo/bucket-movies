@@ -51,7 +51,7 @@
 			<div flex class="colorWhite">
 				<h3 class="md-tittle">Tags Movies</h3>
 				<div class="md-subhead" layout="row" layout-wrap>
-					<div ng-repeat="known_for in personInfo.data.known_for">
+					<div ng-repeat="known_for in personInfo.data.known_for" class="cursor" ui-sref="home.movie({id: known_for.media.id})">
 						<md-tooltip md-direction="top">
 				          	{{known_for.media.title}}
 				        </md-tooltip>
@@ -100,43 +100,35 @@
 					</div>
 				</div>
 			</div>
-			<div flex class="colorWhite">
+			<div flex class="colorWhite" ng-repeat="cast in [personInfo.data.credits.cast]">
 				<h3 class="md-tittle">Acting</h3>
-				<div class="" layout="column">
-					<md-list flex ng-cloak ng-include="('personActing' | url).url">
-				      	
-				        	<!--personActing.html-->
-				      	
+				<div layout="column">
+					<md-list flex person-cast-crew="Acting" ng-model="cast" >
+				        <!--personActing.html-->				      	
 				    </md-list>
 				</div>
 			</div>
-			<div flex class="colorWhite">
+			<div flex class="colorWhite" ng-repeat="crew in [personInfo.data.credits.crew]">
 				<h3 class="md-tittle">Production</h3>
-				<div class="" layout="column">
-					<md-list flex>
-				      	<md-list-item ng-click="x" ui-sref="home.movie({id: crew.id})" class="md-3-line" ng-repeat="crew in personInfo.data.credits.crew | filter: {department:'Production'}" ng-include="('personCrew' | url).url">
-				        	<!--personCrew.html-->				        	
-				      	</md-list-item>
+				<div layout="column" >
+					<md-list flex person-cast-crew="Production" ng-model="crew">				      	
+				        <!--personCrew.html-->				        					      	
 				    </md-list>
 				</div>
 			</div>
-			<div flex class="colorWhite">
+			<div flex class="colorWhite" ng-repeat="crew in [personInfo.data.credits.crew]">
 				<h3 class="md-tittle">Writing</h3>
-				<div class="" layout="column">
-					<md-list flex>
-				      	<md-list-item ng-click="x" ui-sref="home.movie({id: crew.id})" class="md-3-line" ng-repeat="crew in personInfo.data.credits.crew | filter: {department:'Writing'}" ng-include="('personCrew' | url).url">
-				        	<!--personCrew.html-->	
-				      	</md-list-item>
+				<div layout="column">
+					<md-list flex person-cast-crew="Writing" ng-model="crew">				      	
+				        <!--personCrew.html-->					      	
 				    </md-list>
 				</div>
 			</div>
-			<div flex class="colorWhite">
+			<div flex class="colorWhite" ng-repeat="crew in [personInfo.data.credits.crew]">
 				<h3 class="md-tittle">Directing</h3>
-				<div class="" layout="column">
-					<md-list flex>
-				      	<md-list-item ng-click="x" ui-sref="home.movie({id: crew.id})" class="md-3-line" ng-repeat="crew in personInfo.data.credits.crew | filter: {department:'Directing'}" ng-include="('personCrew' | url).url">
-				        	<!--personCrew.html-->				        	
-				      	</md-list-item>
+				<div layout="column">
+					<md-list flex person-cast-crew="Directing" ng-model="crew">				      	
+				        <!--personCrew.html-->				        					      	
 				    </md-list>
 				</div>
 			</div>

@@ -332,3 +332,29 @@ BMovies.directive('personInfo', function(globalServices, $filter) {
         template: '<div ng-include="personInfo.url" layout="column" layout-fill></div>'
     }
 });
+
+BMovies.directive('personCastCrew', function(globalServices, $filter) {
+    return {
+        restrict : 'AE',
+        scope: {
+            ngModelPersonCastCrew: '=ngModel',
+            typeCastCrew: '@personCastCrew'
+        },
+        link: function (scope, element, attrs, ngModelCtrl) { 
+            
+            switch(scope.typeCastCrew)
+            {
+                case'Acting':
+                    scope.castCrew = {url: $filter('url')('personActing').url, data: scope.ngModelPersonCastCrew, filter: ''};
+                break;
+                case'Production':
+                case'Writing':
+                case'Directing':
+                    scope.castCrew = {url: $filter('url')('personCrew').url, data: scope.ngModelPersonCastCrew, filter: scope.typeCastCrew};
+                break;
+            }                        
+
+        },
+        template: '<div ng-include="castCrew.url"></div>'
+    }
+});
