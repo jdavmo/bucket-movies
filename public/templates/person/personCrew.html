@@ -1,0 +1,28 @@
+<img ng-if="crew.poster_path != null" ng-src="http://image.tmdb.org/t/p/w300{{crew.poster_path}}" class="listMovImg" alt="{{crew.title}}">
+<img ng-if="crew.poster_path == null" ng-src="./img/no_avatar.png" class="listMovImg" alt="{{crew.title}}">
+
+<div class="md-list-item-text colorWhite" layout="column" ng-if="crew.media_type == 'movie'">
+		<h3 class="colorWhite">
+			<span class="bold">{{crew.title}}</span> <span>(Movie)</span>
+		</h3>
+		<h4 class="colorWhite">
+			{{crew.release_date | date:'MMM yyyy'}}
+		</h4>
+		<p class="colorWhite" ng-if="crew.job != ''">
+			Job: {{ crew.job }}
+		</p>
+</div>
+<div class="md-list-item-text" layout="column" ng-if="crew.media_type == 'tv'">
+		<h3 class="colorWhite ">
+			<span class="bold">{{crew.name}}</span> <span>(tv)</span>
+		</h3>
+		<h4 class="colorWhite">
+			{{crew.first_air_date | date:'MMM yyyy'}}
+		</h4>
+		<p class="colorWhite">
+			<span ng-if="crew.job != ''">
+				Job: {{ crew.job }}
+			</span>
+		</p>
+</div>
+<md-divider class="btWhite"></md-divider>

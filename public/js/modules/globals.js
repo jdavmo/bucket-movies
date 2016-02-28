@@ -161,6 +161,66 @@ BMGlobals.service('globalServices', function globalServices($http, $q, $mdDialog
         }
         
     }
+
+    globalServices.setSortFiels = function(rows)
+    {
+ 
+        if(rows.length == 0){
+            return rows;
+        }
+       
+        var i = 0;
+        angular.forEach(rows, function(value, key)
+        {
+            if(value.media_type == 'movie')
+            {
+                if(value.release_date == '' || value.release_date == null)
+                {
+                    value['dateO'] = '1900-01-01';
+                }
+                else
+                {
+                    value['dateO'] = value.release_date;
+                }
+                value['nameO'] = value.title;                
+                i++;                 
+            }
+
+            else if(value.media_type == 'tv')
+            {
+                
+                if(value.first_air_date == '' || value.first_air_date == null)
+                {
+                    value['dateO'] = '1900-01-01';
+                }
+                else
+                {
+                    value['dateO'] = value.first_air_date;
+                }
+                    
+                value['nameO'] = value.name;                  
+                i++;
+            }
+            else
+            {
+                if(value.release_date == '' || value.release_date == null)
+                {
+                    value['dateO'] = '1900-01-01';
+                }
+                else
+                {
+                    value['dateO'] = value.release_date;
+                }
+                value['nameO']      = value.title;
+                value['media_type'] = 'movie';
+                i++;
+            }
+             
+        });
+    
+        return rows;
+ 
+    }
     
 
 });

@@ -277,7 +277,7 @@ BMovies.directive('getMovie', function(globalServices) {
 |   @attribute ng-model 
 |   @return
 |*/
-BMovies.directive('personInfo', function(globalServices) {
+BMovies.directive('personInfo', function(globalServices, $filter) {
     return {
         restrict : 'AE',
         scope: {
@@ -294,11 +294,39 @@ BMovies.directive('personInfo', function(globalServices) {
                 if(res.validation == 'ok')
                 {
                     //the scope with the result data person
-                    scope.personInfo.data           = res.data;
-                    scope.personInfo.data.known_for = globalServices.orderImgTags(res.data.tagImgs.results);
-                    //scope.ngModelPerson.dataCredits   = res.credits;                                        
+                    scope.personInfo.data                = res.data;
+                    scope.personInfo.data.credits.cast   = globalServices.setSortFiels(res.data.credits.cast);
+                    scope.personInfo.data.credits.crew   = globalServices.setSortFiels(res.data.credits.crew);
+
+                    scope.personInfo.data.known_for      = globalServices.orderImgTags(res.data.tagImgs.results);
+
+                    scope.sortCredits('', scope.ngModelPerson.sort);
+                                                           
                 }                                
             }); 
+
+            scope.sortCredits = function($event, sort)
+            {
+
+                scope.ngModelPerson.sort = sort;
+
+                switch(scope.ngModelPerson.sortBy)
+                {
+                    case'year':
+                        scope.personInfo.data.credits.cast = $filter('orderBy')(scope.personInfo.data.credits.cast, 'dateO', sort)
+                        scope.personInfo.data.credits.crew = $filter('orderBy')(scope.personInfo.data.credits.crew, 'dateO', sort)
+                    break;
+                    case'name':
+                        scope.personInfo.data.credits.cast = $filter('orderBy')(scope.personInfo.data.credits.cast, 'nameO', sort)
+                        scope.personInfo.data.credits.crew = $filter('orderBy')(scope.personInfo.data.credits.crew, 'nameO', sort)
+                    break;
+                    case'media_type':
+                        scope.personInfo.data.credits.cast = $filter('orderBy')(scope.personInfo.data.credits.cast, 'media_type', sort)
+                        scope.personInfo.data.credits.crew = $filter('orderBy')(scope.personInfo.data.credits.crew, 'media_type', sort)
+                    break;
+                }
+
+            }
 
         },
         template: '<div ng-include="personInfo.url" layout="column" layout-fill></div>'

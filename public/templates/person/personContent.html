@@ -3,6 +3,10 @@
         <h2>
           	<span>{{personInfo.data.person.name}}</span>
         </h2>	  
+        <div flex></div>
+        <md-button class="md-icon-button" aria-label="close" ui-sref="home()">
+        	<md-icon md-svg-icon="{{('navigation' | icon:'close')}}"></md-icon>
+    	</md-button>
     </div>      
 </md-toolbar>
 <md-content flex class="transparent" layout-padding>
@@ -22,13 +26,13 @@
     			<h3 class="md-title">Person Facts</h3>
     			<div class="md-subhead">
     				<span class="bold">Known Credits:</span>
-    				<span>{{personInfo.data.credits.cast.length}}</span>
+    				<span>{{personInfo.data.credits.cast.length + personInfo.data.credits.crew.length}}</span>
     			</div>
-    			<div class="md-subhead">
+    			<div class="md-subhead" ng-if="personInfo.data.person.birthday != ''">
     				<span class="bold">Birthday:</span>
     				<span>{{personInfo.data.person.birthday | date:'dd MMMM yyyy'}}</span>
     			</div>
-    			<div class="md-subhead">
+    			<div class="md-subhead" ng-if="personInfo.data.person.place_of_birth != ''">
     				<span class="bold">Place of Birth:</span>
     				<span>{{personInfo.data.person.place_of_birth}}</span>
     			</div>	    		
@@ -37,12 +41,15 @@
 		<div flex class="colorWhite" layout="column">
 			<div>
 				<h3 class="md-tittle">Biography</h3>
-				<div class="md-subhead" ng-bind-html="personInfo.data.person.biography | unsafe">
+				<div class="md-subhead" ng-bind-html="personInfo.data.person.biography | unsafe" ng-if="personInfo.data.person.biography != ''">
 				
+				</div>
+				<div class="md-subhead" ng-if="personInfo.data.person.biography == ''">
+					No one has entered a biography for Billy Murray.
 				</div>
 			</div>
 			<div flex class="colorWhite">
-				<h3 class="md-tittle">Known for</h3>
+				<h3 class="md-tittle">Tags Movies</h3>
 				<div class="md-subhead" layout="row" layout-wrap>
 					<div ng-repeat="known_for in personInfo.data.known_for">
 						<md-tooltip md-direction="top">
@@ -53,28 +60,82 @@
 					</div>
 				</div>
 			</div>
+			<div layout="row" class="vert_middle">
+				<div flex></div>
+				<div layout="row" class="vert_middle">
+					<div>
+						Sort By 
+						<span ng-if="ngModelPerson.sortBy == 'year'">Year</span>
+						<span ng-if="ngModelPerson.sortBy == 'name'">Name</span>
+						<span ng-if="ngModelPerson.sortBy == 'media_type'">Media Type</span>
+					</div>
+					<div>
+						<md-menu>
+					      	<md-button aria-label="opens option search" class="md-icon-button m0" ng-click="$mdOpenMenu($event)">
+					        	<md-icon class="colorWhite" md-menu-origin md-svg-icon="{{('navigation' | icon:'arrow_drop_down')}}"></md-icon>
+					      	</md-button>
+					      	<md-menu-content width="4" class="blackMate">
+					        	<md-menu-item>
+					          		<md-button ng-click="ngModelPerson.sortBy = 'year';sortCredits($event, ngModelPerson.sort);">
+					            		<md-icon class="colorWhite" md-svg-icon="{{('social' | icon:'person')}}" md-menu-align-target></md-icon>
+					            		<span class="colorWhite">Year</span>
+					          		</md-button>
+					        	</md-menu-item>
+					        	<md-menu-item>
+					          		<md-button ng-click="ngModelPerson.sortBy = 'name';sortCredits($event, ngModelPerson.sort);">
+					            		<md-icon class="colorWhite" md-svg-icon="{{('av' | icon:'movie')}}"></md-icon>
+					            		<span class="colorWhite">Name</span>
+					          		</md-button>
+					        	</md-menu-item>
+					      	</md-menu-content>
+					    </md-menu>
+					</div>
+					<div>
+						<md-button class="md-icon-button" aria-label="sortActor" ng-click="sortCredits($event, true);" ng-if="ngModelPerson.sort == false">
+				          	<md-icon class="colorWhite" md-svg-icon="{{('navigation' | icon:'arrow_upward')}}" ></md-icon>
+				        </md-button>        
+				        <md-button class="md-icon-button" aria-label="sortActor" ng-click="sortCredits($event, false);" ng-if="ngModelPerson.sort == true">
+				          	<md-icon class="colorWhite" md-svg-icon="{{('navigation' | icon:'arrow_downward')}}"></md-icon>
+				        </md-button>
+					</div>
+				</div>
+			</div>
 			<div flex class="colorWhite">
 				<h3 class="md-tittle">Acting</h3>
 				<div class="" layout="column">
+					<md-list flex ng-cloak ng-include="('personActing' | url).url">
+				      	
+				        	<!--personActing.html-->
+				      	
+				    </md-list>
+				</div>
+			</div>
+			<div flex class="colorWhite">
+				<h3 class="md-tittle">Production</h3>
+				<div class="" layout="column">
 					<md-list flex>
-				      	<md-list-item class="md-3-line" ng-repeat="cast in personInfo.data.credits.cast">
-				        	<img ng-if="cast.poster_path != null" ng-src="http://image.tmdb.org/t/p/w300{{cast.poster_path}}" class="listMovImg" alt="{{cast.title}}">
-				            <img ng-if="cast.poster_path == null" ng-src="./img/no_avatar.png" class="listMovImg" alt="{{cast.title}}">
-				        	<div class="md-list-item-text colorWhite" layout="column" ng-if="cast.media_type == 'movie'">
-				          		<h3 class="colorWhite"><span class="bold">{{cast.title}}</span> <span>(Movie)</span></h3>
-				          		<h4 class="colorWhite">{{cast.release_date | date:'MMM yyyy'}}</h4>
-				          		<p class="colorWhite" ng-if="cast.character != ''">Character: {{ cast.character }}</p>
-				        	</div>
-				        	<div class="md-list-item-text" layout="column" ng-if="cast.media_type == 'tv'">
-				          		<h3 class="colorWhite "><span class="bold">{{cast.name}}</span> <span>(tv)</span></h3>
-				          		<h4 class="colorWhite">{{cast.first_air_date | date:'MMM yyyy'}}</h4>
-				          		<p class="colorWhite">
-				          			<span ng-if="cast.character != ''">Character: {{ cast.character }}</span>
-				          			<span ng-if="cast.character != ''">&nbsp;&bull;&nbsp;</span>
-				          			<span ng-if="cast.episode_count > 0">Episodes: {{ cast.episode_count }}</span>
-				          		</p>
-				        	</div>
-				        	<md-divider class="btWhite"></md-divider>
+				      	<md-list-item ng-click="x" ui-sref="home.movie({id: crew.id})" class="md-3-line" ng-repeat="crew in personInfo.data.credits.crew | filter: {department:'Production'}" ng-include="('personCrew' | url).url">
+				        	<!--personCrew.html-->				        	
+				      	</md-list-item>
+				    </md-list>
+				</div>
+			</div>
+			<div flex class="colorWhite">
+				<h3 class="md-tittle">Writing</h3>
+				<div class="" layout="column">
+					<md-list flex>
+				      	<md-list-item ng-click="x" ui-sref="home.movie({id: crew.id})" class="md-3-line" ng-repeat="crew in personInfo.data.credits.crew | filter: {department:'Writing'}" ng-include="('personCrew' | url).url">
+				        	<!--personCrew.html-->	
+				      	</md-list-item>
+				    </md-list>
+				</div>
+			</div>
+			<div flex class="colorWhite">
+				<h3 class="md-tittle">Directing</h3>
+				<div class="" layout="column">
+					<md-list flex>
+				      	<md-list-item ng-click="x" ui-sref="home.movie({id: crew.id})" class="md-3-line" ng-repeat="crew in personInfo.data.credits.crew | filter: {department:'Directing'}" ng-include="('personCrew' | url).url">
+				        	<!--personCrew.html-->				        	
 				      	</md-list-item>
 				    </md-list>
 				</div>
