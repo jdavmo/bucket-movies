@@ -415,8 +415,8 @@ BMovies.directive('personCastCrew', function(globalServices, $filter, $state, $m
                     $mdDialog.show(
                         $mdDialog.alert()
                             .clickOutsideToClose(true)
-                            .title('View no avaliable')
-                            .textContent('The view for tv is not avaliable')
+                            .title('View is not available')
+                            .textContent('The view for tv is not available')
                             .ariaLabel('Alert Dialog')
                             .ok('ok')
                     );

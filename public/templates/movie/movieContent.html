@@ -24,35 +24,35 @@
     		</div>
     		<div class="p_20 colorWhite" layout="column">
     			<h3 class="md-title">Movie Facts</h3>
-    			<div class="md-subhead" ng-if="movieInfo.data.person.release_date != ''" layout="column">
+    			<div class="md-subhead" ng-if="movieInfo.data.person.release_date != '' && movieInfo.data.person.release_date != null" layout="column">
     				<span class="bold">Release date</span>
     				<div class="mt_5 mb_5">{{movieInfo.data.movie.release_date | date:'dd MMMM yyyy'}}</div>
     			</div>
-    			<div class="md-subhead" layout="column">
+    			<div class="md-subhead" layout="column" ng-if="movieInfo.data.movie.spoken_languages.length > 0">
     				<span class="bold">Language</span>
     				<div class="mt_5 mb_5">
     					<span class="md-subhead f_15" ng-repeat="spoken in movieInfo.data.movie.spoken_languages">{{spoken.name}}<span ng-if="!$last">, </span></span>
     				</div>
     			</div>
-    			<div class="md-subhead" layout="column">
+    			<div class="md-subhead" layout="column" ng-if="movieInfo.data.movie.production_companies.length > 0">
     				<span class="bold">Production companies</span>
     				<div class="mt_5 mb_5">
     					<span class="md-subhead f_15" ng-repeat="company in movieInfo.data.movie.production_companies">{{company.name}}<span ng-if="!$last">, </span></span>
     				</div>
     			</div>
-    			<div class="md-subhead" layout="column">
+    			<div class="md-subhead" layout="column" ng-if="movieInfo.data.movie.production_countries.length > 0">
     				<span class="bold">Production countries</span>
     				<div class="mt_5 mb_5">
     					<span class="md-subhead f_15" ng-repeat="country in movieInfo.data.movie.production_countries">{{country.name}}<span ng-if="!$last">, </span></span>
     				</div>
     			</div>
-    			<div class="md-subhead" layout="column">
+    			<div class="md-subhead" layout="column" ng-if="movieInfo.data.movie.genres.length > 0">
     				<span class="bold">Genres</span>
     				<div class="mt_5 mb_5">
     					<span class="md-subhead f_15" ng-repeat="genre in movieInfo.data.movie.genres">{{genre.name}}<span ng-if="!$last">, </span></span>
     				</div>
     			</div>
-    			<div class="md-subhead" layout="column">
+    			<div class="md-subhead" layout="column" ng-if="movieInfo.data.trailers.youtube.length > 0">
     				<span class="bold">Trailers</span>
     				<div class="mt_5 mb_5" layout="column">
     					<a class="md-subhead f_15 cursor underline" show-trailer ng-model="trailer" ng-repeat="trailer in movieInfo.data.trailers.youtube">
@@ -72,7 +72,7 @@
 					No one has entered a Overview for this movie.
 				</div>
 			</div>
-			<div flex class="colorWhite">
+			<div flex class="colorWhite" ng-if="movieInfo.data.similar.results.length > 0">
 				<h3 class="md-tittle">Similar movies...</h3>
 				<div class="md-subhead" layout="row" layout-wrap>
 					<div ng-repeat="similar in movieInfo.data.similar.results" class="cursor" ui-sref="home.movie({id: similar.id})">
