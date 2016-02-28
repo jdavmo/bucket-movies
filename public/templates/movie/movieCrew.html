@@ -1,14 +1,20 @@
+<!--List Crew of movie-->
 <md-list-item ui-sref="home.person({id: crew.id})" class="md-3-line" ng-repeat="crew in castCrew.data | filter: {department: castCrew.filter}">
+	<!--Picture person-->
 	<img ng-if="crew.profile_path != null" ng-src="http://image.tmdb.org/t/p/w300{{crew.profile_path}}" class="listMovImg" alt="{{crew.name}}">
+	<!--Picture empty-->
 	<img ng-if="crew.profile_path == null" ng-src="./img/no_avatar.png" class="listMovImg" alt="{{crew.name}}">
-
+	<!--Info person-->
 	<div class="md-list-item-text colorWhite" layout="column">
-			<h3 class="colorWhite">
-				<span class="bold">{{crew.name}}
-			</h3>
-			<p class="colorWhite" ng-if="crew.job != ''">
-				Job: {{ crew.job }}
-			</p>
+		<!--Name person-->
+		<h3 class="colorWhite">
+			<span class="bold">{{crew.name}}
+		</h3>
+		<!--Job person-->
+		<p class="colorWhite" ng-if="crew.job != ''">
+			Job: {{ crew.job }}
+		</p>
 	</div>
+	<!--divider list-->
 	<md-divider class="btWhite"></md-divider>
 </md-list-item>

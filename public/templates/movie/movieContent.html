@@ -1,60 +1,87 @@
+<!--Nav bar toolbar-->
 <md-toolbar class="toolbarMain">
 	<div class="md-toolbar-tools">	    		        
+		<!--Title Movie-->
         <h2>
           	<span>{{movieInfo.data.movie.title}}</span>
-        </h2>	  
+        </h2>
+        <!--Space central-->
         <div flex></div>
+        <!--Button close State or return to home-->
         <md-button class="md-icon-button" aria-label="close" ui-sref="home()">
         	<md-icon md-svg-icon="{{('navigation' | icon:'close')}}"></md-icon>
     	</md-button>
     </div>      
 </md-toolbar>
+<!--Content Movie info-->
 <md-content flex class="transparent" layout-padding>
+	<!--Div contaniner This is divided into two |info|general info|-->
 	<div layout="row">
+		<!--Info-->
 		<div flex="25" layout="column" class="p_20">
+			<!--The movie posters in carosel-->
 			<div layout="row" layout-align="center center">
 				<!--carousel-->
 				<ul rn-carousel class="m0 bm-carousel personPicture" rn-carousel-auto-slide="5">
 				  	<li ng-repeat="poster in movieInfo.data.images.posters">
 				  		<!--Img carousel-->
 				  		<img ng-src="http://image.tmdb.org/t/p/w300{{poster.file_path}}" alt="carouselImg">
-				  		<!--Title carousel movie-->
 				  	</li>  	
 				</ul>
     		</div>
+    		<!--Movie Facts-->
     		<div class="p_20 colorWhite" layout="column">
     			<h3 class="md-title">Movie Facts</h3>
-    			<div class="md-subhead" ng-if="movieInfo.data.person.release_date != '' && movieInfo.data.person.release_date != null" layout="column">
+    			<!--Release date-->
+    			<div class="md-subhead" ng-if="movieInfo.data.movie.release_date != '' && movieInfo.data.movie.release_date != null" layout="column">
     				<span class="bold">Release date</span>
     				<div class="mt_5 mb_5">{{movieInfo.data.movie.release_date | date:'dd MMMM yyyy'}}</div>
     			</div>
+    			<!--Language-->
     			<div class="md-subhead" layout="column" ng-if="movieInfo.data.movie.spoken_languages.length > 0">
     				<span class="bold">Language</span>
     				<div class="mt_5 mb_5">
-    					<span class="md-subhead f_15" ng-repeat="spoken in movieInfo.data.movie.spoken_languages">{{spoken.name}}<span ng-if="!$last">, </span></span>
+    					<!--ng repeat of array languages-->
+    					<span class="md-subhead f_15" ng-repeat="spoken in movieInfo.data.movie.spoken_languages">
+    						{{spoken.name}}<span ng-if="!$last">, </span>
+    					</span>
     				</div>
     			</div>
+    			<!--Companies-->
     			<div class="md-subhead" layout="column" ng-if="movieInfo.data.movie.production_companies.length > 0">
     				<span class="bold">Production companies</span>
     				<div class="mt_5 mb_5">
-    					<span class="md-subhead f_15" ng-repeat="company in movieInfo.data.movie.production_companies">{{company.name}}<span ng-if="!$last">, </span></span>
+    					<!--ng repeat of array production companies-->
+    					<span class="md-subhead f_15" ng-repeat="company in movieInfo.data.movie.production_companies">
+    						{{company.name}}<span ng-if="!$last">, </span>
+    					</span>
     				</div>
     			</div>
+    			<!--Countries-->
     			<div class="md-subhead" layout="column" ng-if="movieInfo.data.movie.production_countries.length > 0">
     				<span class="bold">Production countries</span>
     				<div class="mt_5 mb_5">
-    					<span class="md-subhead f_15" ng-repeat="country in movieInfo.data.movie.production_countries">{{country.name}}<span ng-if="!$last">, </span></span>
+    					<!--ng repeat of array production countries-->
+    					<span class="md-subhead f_15" ng-repeat="country in movieInfo.data.movie.production_countries">
+    						{{country.name}}<span ng-if="!$last">, </span>
+    					</span>
     				</div>
     			</div>
+    			<!--Genres-->
     			<div class="md-subhead" layout="column" ng-if="movieInfo.data.movie.genres.length > 0">
     				<span class="bold">Genres</span>
     				<div class="mt_5 mb_5">
-    					<span class="md-subhead f_15" ng-repeat="genre in movieInfo.data.movie.genres">{{genre.name}}<span ng-if="!$last">, </span></span>
+    					<!--ng repeat of array genres-->
+    					<span class="md-subhead f_15" ng-repeat="genre in movieInfo.data.movie.genres">
+    						{{genre.name}}<span ng-if="!$last">, </span>
+    					</span>
     				</div>
     			</div>
+    			<!--Trailers-->
     			<div class="md-subhead" layout="column" ng-if="movieInfo.data.trailers.youtube.length > 0">
     				<span class="bold">Trailers</span>
     				<div class="mt_5 mb_5" layout="column">
+    					<!--ng repeat of array trailers youtube-->
     					<a class="md-subhead f_15 cursor underline" show-trailer ng-model="trailer" ng-repeat="trailer in movieInfo.data.trailers.youtube">
     						{{trailer.name}}
     					</a>
@@ -62,48 +89,66 @@
     			</div>
     		</div>
 		</div>
+		<!--General Info-->
 		<div flex class="colorWhite" layout="column">
+			<!--Block The Overview-->
 			<div>
+				<!--Title overview-->
 				<h3 class="md-tittle">Overview</h3>
-				<div class="md-subhead" ng-bind-html="movieInfo.data.movie.overview | unsafe" ng-if="movieInfo.data.movie.overview != ''">
-				
-				</div>
+				<!--The overview from TMDB-->
+				<div class="md-subhead" ng-bind-html="movieInfo.data.movie.overview | unsafe" ng-if="movieInfo.data.movie.overview != ''"></div>
+				<!--The overview when TMDB is null-->
 				<div class="md-subhead" ng-if="movieInfo.data.movie.overview == ''">
 					No one has entered a Overview for this movie.
 				</div>
 			</div>
+			<!--Block Similar Movies-->
 			<div flex class="colorWhite" ng-if="movieInfo.data.similar.results.length > 0">
+				<!--Title similar movies-->
 				<h3 class="md-tittle">Similar movies...</h3>
+				<!--ng-repeat for similar movies-->
 				<div class="md-subhead" layout="row" layout-wrap>
 					<div ng-repeat="similar in movieInfo.data.similar.results" class="cursor" ui-sref="home.movie({id: similar.id})">
+						<!--Tooltip movie-->
 						<md-tooltip md-direction="top">
 				          	{{similar.title}}
 				        </md-tooltip>
+				        <!--Imagen movie from TMDB-->
 						<img ng-if="similar.poster_path != null" ng-src="http://image.tmdb.org/t/p/w300{{similar.poster_path}}" class="listMovImgKnown" alt="{{similar.title}}">
+						<!--Imagen movie when TMDB image is null-->
 				        <img ng-if="similar.poster_path == null" ng-src="./img/no_avatar.png" class="listMovImgKnown" alt="{{similar.title}}">
 					</div>
 				</div>
 			</div>
+			<!--Block Sort by-->
 			<div layout="row" class="vert_middle">
+				<!--space left-->
 				<div flex></div>
+				<!--String sort && menu-->
 				<div layout="row" class="vert_middle">
+					<!--String sort-->
 					<div>
 						Sort By 
 						<span ng-if="ngModelMovie.sortBy == 'chronological'">Chronological</span>
 						<span ng-if="ngModelMovie.sortBy == 'name'">Name</span>
 					</div>
+					<!--Menu sort-->
 					<div>
 						<md-menu>
+							<!--icon sort for open options-->
 					      	<md-button aria-label="opens option search" class="md-icon-button m0" ng-click="$mdOpenMenu($event)">
 					        	<md-icon class="colorWhite" md-menu-origin md-svg-icon="{{('navigation' | icon:'arrow_drop_down')}}"></md-icon>
 					      	</md-button>
+					      	<!--Options menu-->
 					      	<md-menu-content width="4" class="blackMate">	
+					      		<!--Option Chronological this is only for cast because the crew haven't order number-->
 					      		<md-menu-item>
 					          		<md-button ng-click="ngModelMovie.sortBy = 'chronological';sortCredits($event, ngModelMovie.sort);">
 					            		<md-icon class="colorWhite" md-svg-icon="{{('action' | icon:'swap_vert')}}"></md-icon>
 					            		<span class="colorWhite">Chronological</span>
 					          		</md-button>
-					        	</md-menu-item>				        	
+					        	</md-menu-item>	
+					        	<!--Option Name order-->			        	
 					        	<md-menu-item>
 					          		<md-button ng-click="ngModelMovie.sortBy = 'name';sortCredits($event, ngModelMovie.sort);">
 					            		<md-icon class="colorWhite" md-svg-icon="{{('action' | icon:'swap_vert')}}"></md-icon>
@@ -113,43 +158,58 @@
 					      	</md-menu-content>
 					    </md-menu>
 					</div>
+					<!--Incon order action-->
 					<div>
+						<!--Incon up order-->
 						<md-button class="md-icon-button" aria-label="sortActor" ng-click="sortCredits($event, true);" ng-if="ngModelMovie.sort == false">
 				          	<md-icon class="colorWhite" md-svg-icon="{{('navigation' | icon:'arrow_upward')}}" ></md-icon>
-				        </md-button>        
+				        </md-button>
+				        <!--Icon down order-->        
 				        <md-button class="md-icon-button" aria-label="sortActor" ng-click="sortCredits($event, false);" ng-if="ngModelMovie.sort == true">
 				          	<md-icon class="colorWhite" md-svg-icon="{{('navigation' | icon:'arrow_downward')}}"></md-icon>
 				        </md-button>
 					</div>
 				</div>
 			</div>
+			<!--Block cast-->
 			<div flex class="colorWhite" ng-repeat="cast in [movieInfo.data.credits.cast]" ng-if="movieInfo.data.credits.cast.length > 0">
-				<h3 class="md-tittle">Casts</h3>
+				<!--Title-->
+				<h3 class="md-tittle">Casts</h3>				
 				<div layout="column">
+					<!--List cast-->
 					<md-list flex movie-cast-crew="Cast" ng-model="cast" >
 				        <!--movieCast.html-->				      	
 				    </md-list>
 				</div>
 			</div>
+			<!--Block production-->
 			<div flex class="colorWhite" ng-repeat="crew in [movieInfo.data.credits.crew]" ng-if="(movieInfo.data.credits.crew | filter: {department: 'Production'}).length > 0">
+				<!--Title-->
 				<h3 class="md-tittle">Production</h3>
 				<div layout="column" >
+					<!--List Production-->
 					<md-list flex movie-cast-crew="Production" ng-model="crew">				      	
 				        <!--movieCrew.html-->				        					      	
 				    </md-list>
 				</div>
 			</div>
+			<!--Block Writing-->
 			<div flex class="colorWhite" ng-repeat="crew in [movieInfo.data.credits.crew]" ng-if="(movieInfo.data.credits.crew | filter: {department: 'Writing'}).length > 0">
-				<h3 class="md-tittle">Writing</h3>
+				<!--Title-->
+				<h3 class="md-tittle">Writing</h3>				
 				<div layout="column">
+					<!--List Writing-->
 					<md-list flex movie-cast-crew="Writing" ng-model="crew">				      	
 				        <!--movieCrew.html-->					      	
 				    </md-list>
 				</div>
 			</div>
+			<!--Block Directing-->
 			<div flex class="colorWhite" ng-repeat="crew in [movieInfo.data.credits.crew]" ng-if="(movieInfo.data.credits.crew | filter: {department: 'Directing'}).length > 0">
+				<!--Title-->
 				<h3 class="md-tittle">Directing</h3>
 				<div layout="column">
+					<!--List Directing-->
 					<md-list flex movie-cast-crew="Directing" ng-model="crew">				      	
 				        <!--movieCrew.html-->				        					      	
 				    </md-list>

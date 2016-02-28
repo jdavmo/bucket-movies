@@ -1,14 +1,20 @@
+<!--List Cast of movie-->
 <md-list-item ui-sref="home.person({id: cast.id})" class="md-3-line" ng-repeat="cast in castCrew.data">
+	<!--Picture person-->
 	<img ng-if="cast.profile_path != null" ng-src="http://image.tmdb.org/t/p/w300{{cast.profile_path}}" class="listMovImg" alt="{{cast.name}}">
+	<!--Picture empty-->
 	<img ng-if="cast.profile_path == null" ng-src="./img/no_avatar.png" class="listMovImg" alt="{{cast.name}}">
-
+	<!--Info person-->
 	<div class="md-list-item-text colorWhite" layout="column">
-			<h3 class="colorWhite">
-				<span class="bold">{{cast.name}}
-			</h3>
-			<p class="colorWhite" ng-if="cast.character != ''">
-				As {{ cast.character }}
-			</p>
+		<!--Name person-->
+		<h3 class="colorWhite">
+			<span class="bold">{{cast.name}}
+		</h3>
+		<!--Character person-->
+		<p class="colorWhite" ng-if="cast.character != ''">
+			As {{ cast.character }}
+		</p>
 	</div>
+	<!--divider list-->
 	<md-divider class="btWhite"></md-divider>
 </md-list-item>

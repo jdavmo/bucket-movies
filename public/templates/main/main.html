@@ -11,20 +11,26 @@
 	          	<span>BucketMovies</span>
 	        </h2>	        
 	        <span flex="5" hide-sm hide-xs></span>
-	        <!--icon search-->
+	        <!--icon search && sort-->
 	        <span>
+	        	<!--Icon search-->
 	        	<md-icon md-svg-icon="{{('action' | icon:'search')}}"></md-icon>
+	        	<!--Menu search by-->
 	        	<md-menu>
+	        		<!--icon sort for open options-->
 			      	<md-button aria-label="opens option search" class="md-icon-button m0" ng-click="$mdOpenMenu($event)">
 			        	<md-icon md-menu-origin md-svg-icon="{{('navigation' | icon:'arrow_drop_down')}}"></md-icon>
 			      	</md-button>
+			      	<!--Options menu-->
 			      	<md-menu-content width="4" class="blackMate">
+			      		<!--Option search by person-->
 			        	<md-menu-item>
 			          		<md-button ng-click="listMovies.searchPlaceholder = 'Search by Person';listMovies.searchBy = 'person';">
 			            		<md-icon class="colorWhite" md-svg-icon="{{('social' | icon:'person')}}" md-menu-align-target></md-icon>
 			            		<span class="colorWhite">Search by Person</span>
 			          		</md-button>
 			        	</md-menu-item>
+			        	<!--Option search by Movie-->
 			        	<md-menu-item>
 			          		<md-button ng-click="listMovies.searchPlaceholder = 'Search by Movie';listMovies.searchBy = 'movie';">
 			            		<md-icon class="colorWhite" md-svg-icon="{{('av' | icon:'movie')}}"></md-icon>
@@ -36,8 +42,11 @@
 	        </span>
 	        <!--search-->
 	        <span flex class="div_search relative">
+	        	<!--Icon when the search by is person-->
 	        	<md-icon class="colorWhite searchIcon" ng-if="listMovies.searchBy == 'person'" md-svg-icon="{{('social' | icon:'person')}}"></md-icon>
+	        	<!--Icon when the search by is movie-->
 	        	<md-icon class="colorWhite searchIcon" ng-if="listMovies.searchBy == 'movie'" md-svg-icon="{{('av' | icon:'movie')}}"></md-icon>
+	        	<!--Input search-->
 	        	<input type="text" class="search" placeholder="{{listMovies.searchPlaceholder}}" id="search" ng-model="listMovies.search">
 	        </span>
 	        <!--clean search-->
@@ -53,7 +62,7 @@
 		<!--carousel - toolbar - List-->
 	</md-content>
 </md-content>
-
+<!--State view for load the views home.movie and home.person-->
 <div ui-view="detail" 
 	 class="anim-in-out anim-slide-right anim-fade {{viewTransitionDetail}}" 
 	 data-anim-sync="true" 

@@ -1,28 +1,40 @@
+<!--List acting of person-->
 <md-list-item ng-click="goMovie(cast)" class="md-3-line" ng-repeat="cast in castCrew.data">
+	<!--Picture media-->
 	<img ng-if="cast.poster_path != null" ng-src="http://image.tmdb.org/t/p/w300{{cast.poster_path}}" class="listMovImg" alt="{{cast.nameO}}">
+	<!--Picture empty media-->
 	<img ng-if="cast.poster_path == null" ng-src="./img/no_avatar.png" class="listMovImg" alt="{{cast.nameO}}">
-
+	<!--Info media-->
 	<div class="md-list-item-text colorWhite" layout="column">
-			<h3 class="colorWhite">
-				<span class="bold">{{cast.nameO}}</span> 
-				<span ng-if="cast.media_type == 'movie'">(Movie)</span>
-				<span ng-if="cast.media_type == 'tv'">(Tv)</span>
-			</h3>
-			<h4 class="colorWhite">
-				<span ng-if="cast.dateO != '1900-01-01'">{{cast.dateO | date:'MMM yyyy'}}</span>
-				<span ng-if="cast.dateO == '1900-01-01'">No Date</span>
-			</h4>
-			<p class="colorWhite">
-				<span ng-if="cast.character != ''">
-					As {{ cast.character }}
-				</span>
-				<span ng-if="cast.character != '' && cast.media_type == 'tv'">
-					&nbsp;&bull;&nbsp;
-				</span>
-				<span ng-if="cast.episode_count > 0 && cast.media_type == 'tv'">
-					Episodes: {{ cast.episode_count }}
-				</span>
-			</p>
+		<!--Title media && type media-->
+		<h3 class="colorWhite">
+			<!--Title-->
+			<span class="bold">{{cast.nameO}}</span> 
+			<!--Type media-->
+			<span ng-if="cast.media_type == 'movie'">(Movie)</span>
+			<span ng-if="cast.media_type == 'tv'">(Tv)</span>
+		</h3>
+		<!--Date media-->
+		<h4 class="colorWhite">
+			<span ng-if="cast.dateO != '1900-01-01'">{{cast.dateO | date:'MMM yyyy'}}</span>
+			<span ng-if="cast.dateO == '1900-01-01'">No Date</span>
+		</h4>
+		<!--Character and count episodes-->
+		<p class="colorWhite">
+			<!--character-->
+			<span ng-if="cast.character != ''">
+				As {{ cast.character }}
+			</span>
+			<!--bull-->
+			<span ng-if="cast.character != '' && cast.media_type == 'tv'">
+				&nbsp;&bull;&nbsp;
+			</span>
+			<!--Count episodes-->
+			<span ng-if="cast.episode_count > 0 && cast.media_type == 'tv'">
+				Episodes: {{ cast.episode_count }}
+			</span>
+		</p>
 	</div>
+	<!--divider list-->
 	<md-divider class="btWhite"></md-divider>
 </md-list-item>

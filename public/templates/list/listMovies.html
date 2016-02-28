@@ -1,6 +1,5 @@
 <!--Carousel-->
 <call-popular ng-model="navBanner" ng-if="ngModel.search == ''"></call-popular>
-
 <!--Toolbar search & sort-->
 <md-toolbar class="transparent delay z-index1" ng-class="{'mt_60': ngModel.search != ''}">
     <div class="md-toolbar-tools">
@@ -14,13 +13,8 @@
           	<span ng-if="ngModel.search == ''">Popular movies</span>
         </h2>
         <span flex></span>
-        <md-button class="md-icon-button" aria-label="back actors" ng-click="ngModel.actorMovies = ''" ng-if="ngModel.actorMovies != ''">
-          	<md-icon md-svg-icon="{{('navigation' | icon:'arrow_back')}}" ></md-icon>
-        </md-button>
-
         <!--Icons Sort Actors-->
         <div ng-if="ngModel.searchBy == 'person' && ngModel.search != ''">
-
 	        <md-button class="md-icon-button" aria-label="sortActor" ng-click="ngModel.sortActor = true" ng-if="ngModel.sortActor == false">
 	          	<md-icon md-svg-icon="{{('navigation' | icon:'arrow_upward')}}" ></md-icon>
 	        </md-button>        
@@ -28,22 +22,17 @@
 	          	<md-icon md-svg-icon="{{('navigation' | icon:'arrow_downward')}}"></md-icon>
 	        </md-button>
 	    </div>
-
         <!--Icons Sort Movies-->
         <div ng-if="ngModel.searchBy == 'movie' && ngModel.search != ''">
-
 	        <md-button class="md-icon-button" aria-label="sortMovie" ng-click="ngModel.sortMovie = true" ng-if="ngModel.sortMovie == false">
 	          	<md-icon md-svg-icon="{{('navigation' | icon:'arrow_upward')}}" ></md-icon>
 	        </md-button>        
 	        <md-button class="md-icon-button" aria-label="sortMovie" ng-click="ngModel.sortMovie = false" ng-if="ngModel.sortMovie == true || (ngModel.search != '' && ngModel.sortMovie == true)">
 	          	<md-icon md-svg-icon="{{('navigation' | icon:'arrow_downward')}}"></md-icon>
 	        </md-button>
-
 	    </div>
-
     </div>
 </md-toolbar>
-
 <!--Content list-->
 <div layout-xs="column" layout="row" layout-wrap>	
 	<!-- popular -->
@@ -58,5 +47,4 @@
 	<div flex-xs flex-gt-xs="50" flex-gt-md="25" layout="column" ng-repeat="person in listMovies | orderBy:'name':ngModel.sortActor" ng-include="('cardPerson' | url).url" ng-if="ngModel.search != '' && ngModel.searchBy == 'person'">
 		<!--cardPerson.html-->
 	</div>
-
 </div>

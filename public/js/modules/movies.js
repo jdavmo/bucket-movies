@@ -79,7 +79,6 @@ BMovies.directive('listMovies', function($location, $filter, $timeout, globalSer
                     scope.ngModel.total             = 0;
                     scope.ngModel.sortActor         = true;
                     scope.ngModel.sortMovieActor    = true;
-                    scope.ngModel.actorMovies       = '';
 
                     var page            = scope.ngModel.page;
                     enter               = 1;

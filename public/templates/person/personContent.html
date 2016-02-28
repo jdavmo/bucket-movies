@@ -1,70 +1,94 @@
+<!--Nav bar toolbar-->
 <md-toolbar class="toolbarMain">
 	<div class="md-toolbar-tools">	    		        
+        <!--Title Person-->
         <h2>
           	<span>{{personInfo.data.person.name}}</span>
-        </h2>	  
+        </h2>
+        <!--Space central-->	  
         <div flex></div>
+        <!--Button close State or return to home-->
         <md-button class="md-icon-button" aria-label="close" ui-sref="home()">
         	<md-icon md-svg-icon="{{('navigation' | icon:'close')}}"></md-icon>
     	</md-button>
     </div>      
 </md-toolbar>
+<!--Content Person info-->
 <md-content flex class="transparent" layout-padding>
+	<!--Div contaniner This is divided into two |info|general info|-->
 	<div layout="row">
+		<!--Info-->
 		<div flex="25" layout="column" class="p_20">
+			<!--The person pictures in carosel-->
 			<div layout="row" layout-align="center center">
 				<!--carousel-->
 				<ul rn-carousel class="m0 bm-carousel personPicture" rn-carousel-auto-slide="5" ng-if="personInfo.data.images.profiles.length > 0">
 				  	<li ng-repeat="profile in personInfo.data.images.profiles">
 				  		<!--Img carousel-->
 				  		<img ng-src="http://image.tmdb.org/t/p/w300{{profile.file_path}}" alt="carouselImg">
-				  		<!--Title carousel movie-->
 				  	</li>  	
 				</ul>
+				<!--Img profile if images profiles is empty-->
 				<img ng-src="http://image.tmdb.org/t/p/w300{{personInfo.data.person.profile_path}}" alt="" ng-if="personInfo.data.images.profiles.length == 0 && personInfo.data.person.profile_path != '' && personInfo.data.person.profile_path != null" class="personPicture">
+				<!--Img empty if images profiles is empty && image profile is empty-->
 				<img ng-src="./img/no_avatar.png" alt="" ng-if="personInfo.data.images.profiles.length == 0 && personInfo.data.person.profile_path == '' || personInfo.data.person.profile_path == null" class="personPicture">
     		</div>
+    		<!--Personal Facts-->
     		<div class="p_20 colorWhite" layout="column">
     			<h3 class="md-title">Person Facts</h3>
+    			<!--Known credits-->
     			<div class="md-subhead">
     				<span class="bold">Known Credits:</span>
     				<span>{{personInfo.data.credits.cast.length + personInfo.data.credits.crew.length}}</span>
     			</div>
+    			<!--Birthday-->
     			<div class="md-subhead" ng-if="personInfo.data.person.birthday != '' && personInfo.data.person.birthday != null">
     				<span class="bold">Birthday:</span>
     				<span>{{personInfo.data.person.birthday | date:'dd MMMM yyyy'}}</span>
     			</div>
+    			<!--Place of birth-->
     			<div class="md-subhead" ng-if="personInfo.data.person.place_of_birth != '' && personInfo.data.person.place_of_birth != null">
     				<span class="bold">Place of Birth:</span>
     				<span>{{personInfo.data.person.place_of_birth}}</span>
     			</div>	    		
     		</div>
 		</div>
+		<!--General Info-->
 		<div flex class="colorWhite" layout="column">
+			<!--Block The Biography-->
 			<div>
+				<!--Title Biography-->
 				<h3 class="md-tittle">Biography</h3>
-				<div class="md-subhead" ng-bind-html="personInfo.data.person.biography | unsafe" ng-if="personInfo.data.person.biography != ''">
-				
-				</div>
+				<!--The Biography from TMDB-->
+				<div class="md-subhead" ng-bind-html="personInfo.data.person.biography | unsafe" ng-if="personInfo.data.person.biography != ''"></div>
+				<!--The Biography when TMDB is null-->
 				<div class="md-subhead" ng-if="personInfo.data.person.biography == '' || personInfo.data.person.biography == null">
 					No one has entered a biography for this person.
 				</div>
 			</div>
+			<!--Block Tag Movies-->
 			<div flex class="colorWhite" ng-if="personInfo.data.known_for != '' && personInfo.data.known_for != null">
+				<!--Title tag movies-->
 				<h3 class="md-tittle">Tag Movies</h3>
+				<!--ng-repeat for tag movies-->
 				<div class="md-subhead" layout="row" layout-wrap>
 					<div ng-repeat="known_for in personInfo.data.known_for" class="cursor" ui-sref="home.movie({id: known_for.media.id})">
+						<!--Tooltip movie-->
 						<md-tooltip md-direction="top">
 				          	{{known_for.media.title}}
 				        </md-tooltip>
+				        <!--Imagen movie from TMDB-->
 						<img ng-if="known_for.media.poster_path != null" ng-src="http://image.tmdb.org/t/p/w300{{known_for.media.poster_path}}" class="listMovImgKnown" alt="{{known_for.media.title}}">
+						<!--Imagen movie when TMDB image is null-->
 				        <img ng-if="known_for.media.poster_path == null" ng-src="./img/no_avatar.png" class="listMovImgKnown" alt="{{known_for.media.title}}">
 					</div>
 				</div>
 			</div>
 			<!--Sort by-->
 			<div layout="row" class="vert_middle">
+				<!--space left-->
 				<div flex></div>
+				<!--String sort && menu-->
 				<div layout="row" class="vert_middle">
 					<!--String info sort-->
 					<div>
@@ -73,19 +97,23 @@
 						<span ng-if="ngModelPerson.sortBy == 'name'">Name</span>
 						<span ng-if="ngModelPerson.sortBy == 'media_type'">Media Type</span>
 					</div>
-					<!--Menu change-->
+					<!--Menu sort-->
 					<div>
 						<md-menu>
+							<!--icon sort for open options-->
 					      	<md-button aria-label="opens option search" class="md-icon-button m0" ng-click="$mdOpenMenu($event)">
 					        	<md-icon class="colorWhite" md-menu-origin md-svg-icon="{{('navigation' | icon:'arrow_drop_down')}}"></md-icon>
 					      	</md-button>
+					      	<!--Options menu-->
 					      	<md-menu-content width="4" class="blackMate">
+					      		<!--Option order Year-->
 					        	<md-menu-item>
 					          		<md-button ng-click="ngModelPerson.sortBy = 'year';sortCredits($event, ngModelPerson.sort);">
 					            		<md-icon class="colorWhite" md-svg-icon="{{('action' | icon:'swap_vert')}}" md-menu-align-target></md-icon>
 					            		<span class="colorWhite">Year</span>
 					          		</md-button>
 					        	</md-menu-item>
+					        	<!--Option Name order-->	
 					        	<md-menu-item>
 					          		<md-button ng-click="ngModelPerson.sortBy = 'name';sortCredits($event, ngModelPerson.sort);">
 					            		<md-icon class="colorWhite" md-svg-icon="{{('action' | icon:'swap_vert')}}"></md-icon>
@@ -95,11 +123,13 @@
 					      	</md-menu-content>
 					    </md-menu>
 					</div>
-					<!--Sort action-->
+					<!--Incon order action-->
 					<div>
+						<!--Incon up order-->
 						<md-button class="md-icon-button" aria-label="sortActor" ng-click="sortCredits($event, true);" ng-if="ngModelPerson.sort == false">
 				          	<md-icon class="colorWhite" md-svg-icon="{{('navigation' | icon:'arrow_upward')}}" ></md-icon>
-				        </md-button>        
+				        </md-button>   
+				        <!--Icon down order-->     
 				        <md-button class="md-icon-button" aria-label="sortActor" ng-click="sortCredits($event, false);" ng-if="ngModelPerson.sort == true">
 				          	<md-icon class="colorWhite" md-svg-icon="{{('navigation' | icon:'arrow_downward')}}"></md-icon>
 				        </md-button>
@@ -108,8 +138,10 @@
 			</div>
 			<!--block acting-->
 			<div flex class="colorWhite" ng-repeat="cast in [personInfo.data.credits.cast]" ng-if="personInfo.data.credits.cast.length > 0">
+				<!--Title-->
 				<h3 class="md-tittle">Acting</h3>
 				<div layout="column">
+					<!--List cast-->
 					<md-list flex person-cast-crew="Acting" ng-model="cast" >
 				        <!--personActing.html-->				      	
 				    </md-list>
@@ -117,8 +149,10 @@
 			</div>
 			<!--block Production-->
 			<div flex class="colorWhite" ng-repeat="crew in [personInfo.data.credits.crew]" ng-if="(personInfo.data.credits.crew | filter: {department: 'Production'}).length > 0">
+				<!--Title-->
 				<h3 class="md-tittle">Production</h3>
 				<div layout="column" >
+					<!--List Production-->
 					<md-list flex person-cast-crew="Production" ng-model="crew">				      	
 				        <!--personCrew.html-->				        					      	
 				    </md-list>
@@ -126,19 +160,23 @@
 			</div>
 			<!--block Writing-->
 			<div flex class="colorWhite" ng-repeat="crew in [personInfo.data.credits.crew]" ng-if="(personInfo.data.credits.crew | filter: {department: 'Writing'}).length > 0">
+				<!--Title-->
 				<h3 class="md-tittle">Writing</h3>
 				<div layout="column">
-					<md-list flex person-cast-crew="Writing" ng-model="crew">				      	
+					<!--List Writing-->
+					<md-list flex person-cast-crew="Writing" ng-model="crew">
 				        <!--personCrew.html-->					      	
 				    </md-list>
 				</div>
 			</div>
 			<!--block Directing-->
 			<div flex class="colorWhite" ng-repeat="crew in [personInfo.data.credits.crew]" ng-if="(personInfo.data.credits.crew | filter: {department: 'Directing'}).length > 0">
+				<!--Title-->
 				<h3 class="md-tittle">Directing</h3>
 				<div layout="column">
-					<md-list flex person-cast-crew="Directing" ng-model="crew">				      	
-				        <!--personCrew.html-->				        					      	
+					<!--List Directing-->
+					<md-list flex person-cast-crew="Directing" ng-model="crew">
+				        <!--personCrew.html-->
 				    </md-list>
 				</div>
 			</div>

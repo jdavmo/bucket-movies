@@ -1,19 +1,28 @@
+<!--List crew of person-->
 <md-list-item ng-click="goMovie(crew)" class="md-3-line" ng-repeat="crew in castCrew.data | filter: {department: castCrew.filter}">
+	<!--Picture media-->
 	<img ng-if="crew.poster_path != null" ng-src="http://image.tmdb.org/t/p/w300{{crew.poster_path}}" class="listMovImg" alt="{{crew.nameO}}">
+	<!--Picture empty-->
 	<img ng-if="crew.poster_path == null" ng-src="./img/no_avatar.png" class="listMovImg" alt="{{crew.nameO}}">
-
+	<!--Info media-->
 	<div class="md-list-item-text colorWhite" layout="column">
-			<h3 class="colorWhite">
-				<span class="bold">{{crew.nameO}}
-				<span ng-if="crew.media_type == 'movie'">(Movie)</span>
-				<span ng-if="crew.media_type == 'tv'">(Tv)</span>
-			</h3>
-			<h4 class="colorWhite">
-				{{crew.dateO | date:'MMM yyyy'}}
-			</h4>
-			<p class="colorWhite" ng-if="crew.job != ''">
-				Job: {{ crew.job }}
-			</p>
+		<!--Title && type media-->
+		<h3 class="colorWhite">
+			<!--Title-->
+			<span class="bold">{{crew.nameO}}
+			<!--Type media-->
+			<span ng-if="crew.media_type == 'movie'">(Movie)</span>
+			<span ng-if="crew.media_type == 'tv'">(Tv)</span>
+		</h3>
+		<!--Date media-->
+		<h4 class="colorWhite">
+			{{crew.dateO | date:'MMM yyyy'}}
+		</h4>
+		<!--Job-->
+		<p class="colorWhite" ng-if="crew.job != ''">
+			Job: {{ crew.job }}
+		</p>
 	</div>
+	<!--Divider list-->
 	<md-divider class="btWhite"></md-divider>
 </md-list-item>

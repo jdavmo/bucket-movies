@@ -40,8 +40,7 @@ bucketMovies.config(function($mdThemingProvider, $stateProvider, $urlRouterProvi
                                      searchBy: 'person',
                                      searchPlaceholder: 'Search by person',
                                      sortActor: true, 
-                                     sortMovie: true, 
-                                     actorMovies: ''
+                                     sortMovie: true
                                     };                
             }      
         })        

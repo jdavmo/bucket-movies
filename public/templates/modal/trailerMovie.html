@@ -2,7 +2,7 @@
     <!--head toobar modal-->
     <md-toolbar class="z_index_2 relative toolbarMain" layout="row">
         <h2 flex class="md-toolbar-tools colorWhite" layout="row">
-            <!--title movie-->
+            <!--title trailer-->
             <div>
                 {{dataTrailer.name}}
             </div>
@@ -13,8 +13,10 @@
             </md-button>
         </h2>          
     </md-toolbar>
+    <!--Dialog content-->
     <md-dialog-content layout-padding>
         <div layout="row" layout-sm="column" layout-xs="column" class="colorWhite">
+            <!--iframe embed-->
             <iframe width="800" height="400" ng-src="{{getIframeSrc(dataTrailer.source)}}" frameborder="0" allowfullscreen></iframe>
         </div>        
     </md-dialog-content>    
