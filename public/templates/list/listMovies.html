@@ -19,7 +19,7 @@
         </md-button>
 
         <!--Icons Sort Actors-->
-        <div ng-if="ngModel.actorMovies == '' && ngModel.search != ''">
+        <div ng-if="ngModel.searchBy == 'person' && ngModel.search != ''">
 
 	        <md-button class="md-icon-button" aria-label="sortActor" ng-click="ngModel.sortActor = true" ng-if="ngModel.sortActor == false">
 	          	<md-icon md-svg-icon="{{('navigation' | icon:'arrow_upward')}}" ></md-icon>
@@ -29,13 +29,13 @@
 	        </md-button>
 	    </div>
 
-        <!--Icons Sort Movies Actors-->
-        <div ng-if="ngModel.actorMovies != '' && ngModel.search != ''">
+        <!--Icons Sort Movies-->
+        <div ng-if="ngModel.searchBy == 'movie' && ngModel.search != ''">
 
-	        <md-button class="md-icon-button" aria-label="sortMovieActor" ng-click="ngModel.sortMovieActor = true" ng-if="ngModel.sortMovieActor == false">
+	        <md-button class="md-icon-button" aria-label="sortMovie" ng-click="ngModel.sortMovie = true" ng-if="ngModel.sortMovie == false">
 	          	<md-icon md-svg-icon="{{('navigation' | icon:'arrow_upward')}}" ></md-icon>
 	        </md-button>        
-	        <md-button class="md-icon-button" aria-label="sortMovieActor" ng-click="ngModel.sortMovieActor = false" ng-if="ngModel.sortMovieActor == true || (ngModel.search != '' && ngModel.sortMovieActor == true)">
+	        <md-button class="md-icon-button" aria-label="sortMovie" ng-click="ngModel.sortMovie = false" ng-if="ngModel.sortMovie == true || (ngModel.search != '' && ngModel.sortMovie == true)">
 	          	<md-icon md-svg-icon="{{('navigation' | icon:'arrow_downward')}}"></md-icon>
 	        </md-button>
 
@@ -46,12 +46,16 @@
 
 <!--Content list-->
 <div layout-xs="column" layout="row" layout-wrap>	
-	<!--Movies - popular -->
-	<div flex-xs flex-gt-xs="50" flex-gt-md="33" layout="column" ng-repeat="movie in listMovies" ng-include="('cardMovie' | url).url" ng-if="ngModel.search == '' || ngModel.searchBy == 'movie'">
+	<!-- popular -->
+	<div flex-xs flex-gt-xs="50" flex-gt-md="33" layout="column" ng-repeat="movie in listMovies" ng-include="('cardMovie' | url).url" ng-if="ngModel.search == ''">
+		<!--cardMovie.html-->
+	</div>
+	<!--Movies -->
+	<div flex-xs flex-gt-xs="50" flex-gt-md="33" layout="column" ng-repeat="movie in listMovies | orderBy:'release_date':ngModel.sortMovie" ng-include="('cardMovie' | url).url" ng-if="ngModel.search != '' && ngModel.searchBy == 'movie'">
 		<!--cardMovie.html-->
 	</div>
 	<!--Movies - actors -->
-	<div flex-xs flex-gt-xs="50" flex-gt-md="25" layout="column" ng-repeat="person in listMovies" ng-include="('cardPerson' | url).url" ng-if="ngModel.search != '' && ngModel.searchBy == 'person'">
+	<div flex-xs flex-gt-xs="50" flex-gt-md="25" layout="column" ng-repeat="person in listMovies | orderBy:'name':ngModel.sortActor" ng-include="('cardPerson' | url).url" ng-if="ngModel.search != '' && ngModel.searchBy == 'person'">
 		<!--cardPerson.html-->
 	</div>
 

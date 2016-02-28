@@ -40,7 +40,7 @@ bucketMovies.config(function($mdThemingProvider, $stateProvider, $urlRouterProvi
                                      searchBy: 'person',
                                      searchPlaceholder: 'Search by person',
                                      sortActor: true, 
-                                     sortMovieActor: true, 
+                                     sortMovie: true, 
                                      actorMovies: ''
                                     };                
             }      
@@ -52,7 +52,7 @@ bucketMovies.config(function($mdThemingProvider, $stateProvider, $urlRouterProvi
                     templateUrl: 'templates/movie/movie.html?i='+i,
                     controller: function($scope, $state, $stateParams, $filter) {
                         $scope.viewTransitionDetail = 'detailFullScreen';
-                        $scope.movie = {template: $filter('url')('movieContent').url, id: $stateParams.id, sortBy: 'chronological', sort: true};                
+                        $scope.movie = {template: $filter('url')('movieContent').url, id: $stateParams.id, sortBy: 'chronological', sort: false};                
                     } 
                 }
             }

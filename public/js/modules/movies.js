@@ -167,18 +167,12 @@ BMovies.directive('listMovies', function($location, $filter, $timeout, globalSer
 
             })
 
-            /*
-            | Select the especific actor
-            | @params array 
-            | @return 
-            */
-            scope.showMoviesActor = function($event, person)
-            {
-                //set id seleccionado
-                scope.ngModel.actorMovies = person.id;
-                //set array with the movies
-                scope.listMoviesActors    = person.known_for;
-            }
+            scope.$watch('ngModel.searchBy', function(current, old){  
+                if(scope.ngModel.search != '')
+                {
+                    BMlist('search', scope.ngModel.searchBy);
+                }
+            });    
 
             BMlist('search', '');
             
@@ -389,7 +383,7 @@ BMovies.directive('personInfo', function(globalServices, $filter) {
     }
 });
 
-BMovies.directive('personCastCrew', function(globalServices, $filter) {
+BMovies.directive('personCastCrew', function(globalServices, $filter, $state, $mdDialog) {
     return {
         restrict : 'AE',
         scope: {
@@ -408,7 +402,26 @@ BMovies.directive('personCastCrew', function(globalServices, $filter) {
                 case'Directing':
                     scope.castCrew = {url: $filter('url')('personCrew').url, data: scope.ngModelPersonCastCrew, filter: scope.typeCastCrew};
                 break;
-            }                        
+            }   
+
+            scope.goMovie = function(data)
+            {
+                if(data.media_type == 'movie')
+                {
+                    $state.go('home.movie', {id: data.id})
+                }
+                if(data.media_type == 'tv')
+                {
+                    $mdDialog.show(
+                        $mdDialog.alert()
+                            .clickOutsideToClose(true)
+                            .title('View no avaliable')
+                            .textContent('The view for tv is not avaliable')
+                            .ariaLabel('Alert Dialog')
+                            .ok('ok')
+                    );
+                }                   
+            }                     
 
         },
         template: '<div ng-include="castCrew.url"></div>'

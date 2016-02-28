@@ -132,8 +132,11 @@ class MoviesController extends Controller
             $movie   = Tmdb::getMoviesApi()->getMovie($id);
             //get credits
             $credits = Tmdb::getMoviesApi()->getCredits($id);
+            //get images movie
             $images  = Tmdb::getMoviesApi()->getImages($id);
+            //get trailers
             $trailers= Tmdb::getMoviesApi()->getTrailers($id);
+            //get similar movies
             $similar = Tmdb::getMoviesApi()->getSimilar($id);
 
             //return validation ok with the movie 
@@ -174,8 +177,11 @@ class MoviesController extends Controller
         try{
             //get person
             $person     = Tmdb::getPeopleApi()->getPerson($id);
+            //get credits
             $credits    = Tmdb::getPeopleApi()->getCombinedCredits($id);
+            //get images
             $images     = Tmdb::getPeopleApi()->getImages($id);
+            //get tag images
             $tagImgs    = Tmdb::getPeopleApi()->getTaggedImages($id);
                     
             //return validation ok with the person
@@ -189,7 +195,7 @@ class MoviesController extends Controller
     }
 
     /*
-    | calling list movies popular or person
+    | calling list movies - popular or person
     | @params search page but is not required
     | @return array
     */
@@ -209,7 +215,7 @@ class MoviesController extends Controller
                         return array('validation' => 'ok', 'list' => Tmdb::getSearchApi()->searchMovies($request->input('search'), array('page' => $request->input('page'))));
                     break;
                     case 'tv':
-                        //return validation ok with the person movies   
+                        //return validation ok with the tv   
                         return array('validation' => 'ok', 'list' => Tmdb::getSearchApi()->searchTv($request->input('search'), array('page' => $request->input('page'))));
                     break;                    
                     default:

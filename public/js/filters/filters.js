@@ -64,6 +64,13 @@ bucketMovies.filter('DateStringToFormat', function($filter) {
     }
 });
 
+/*
+|   Filter for bind html
+|   This filter valid html
+|   This filter need one param:
+|   @param val (string) 
+|   @return html
+|*/
 bucketMovies.filter('unsafe', function($sce) {
     return function(val) {
         return $sce.trustAsHtml(val);

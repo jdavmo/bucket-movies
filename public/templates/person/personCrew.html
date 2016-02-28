@@ -1,4 +1,4 @@
-<md-list-item ui-sref="home.movie({id: crew.id})" class="md-3-line" ng-repeat="crew in castCrew.data | filter: {department: castCrew.filter}">
+<md-list-item ng-click="goMovie(crew)" class="md-3-line" ng-repeat="crew in castCrew.data | filter: {department: castCrew.filter}">
 	<img ng-if="crew.poster_path != null" ng-src="http://image.tmdb.org/t/p/w300{{crew.poster_path}}" class="listMovImg" alt="{{crew.nameO}}">
 	<img ng-if="crew.poster_path == null" ng-src="./img/no_avatar.png" class="listMovImg" alt="{{crew.nameO}}">
 

@@ -100,13 +100,13 @@
 					      	<md-menu-content width="4" class="blackMate">	
 					      		<md-menu-item>
 					          		<md-button ng-click="ngModelMovie.sortBy = 'chronological';sortCredits($event, ngModelMovie.sort);">
-					            		<md-icon class="colorWhite" md-svg-icon="{{('av' | icon:'movie')}}"></md-icon>
+					            		<md-icon class="colorWhite" md-svg-icon="{{('action' | icon:'swap_vert')}}"></md-icon>
 					            		<span class="colorWhite">Chronological</span>
 					          		</md-button>
 					        	</md-menu-item>				        	
 					        	<md-menu-item>
 					          		<md-button ng-click="ngModelMovie.sortBy = 'name';sortCredits($event, ngModelMovie.sort);">
-					            		<md-icon class="colorWhite" md-svg-icon="{{('av' | icon:'movie')}}"></md-icon>
+					            		<md-icon class="colorWhite" md-svg-icon="{{('action' | icon:'swap_vert')}}"></md-icon>
 					            		<span class="colorWhite">Name</span>
 					          		</md-button>
 					        	</md-menu-item>
@@ -123,7 +123,7 @@
 					</div>
 				</div>
 			</div>
-			<div flex class="colorWhite" ng-repeat="cast in [movieInfo.data.credits.cast]">
+			<div flex class="colorWhite" ng-repeat="cast in [movieInfo.data.credits.cast]" ng-if="movieInfo.data.credits.cast.length > 0">
 				<h3 class="md-tittle">Casts</h3>
 				<div layout="column">
 					<md-list flex movie-cast-crew="Cast" ng-model="cast" >
@@ -131,7 +131,7 @@
 				    </md-list>
 				</div>
 			</div>
-			<div flex class="colorWhite" ng-repeat="crew in [movieInfo.data.credits.crew]">
+			<div flex class="colorWhite" ng-repeat="crew in [movieInfo.data.credits.crew]" ng-if="(movieInfo.data.credits.crew | filter: {department: 'Production'}).length > 0">
 				<h3 class="md-tittle">Production</h3>
 				<div layout="column" >
 					<md-list flex movie-cast-crew="Production" ng-model="crew">				      	
@@ -139,7 +139,7 @@
 				    </md-list>
 				</div>
 			</div>
-			<div flex class="colorWhite" ng-repeat="crew in [movieInfo.data.credits.crew]">
+			<div flex class="colorWhite" ng-repeat="crew in [movieInfo.data.credits.crew]" ng-if="(movieInfo.data.credits.crew | filter: {department: 'Writing'}).length > 0">
 				<h3 class="md-tittle">Writing</h3>
 				<div layout="column">
 					<md-list flex movie-cast-crew="Writing" ng-model="crew">				      	
@@ -147,7 +147,7 @@
 				    </md-list>
 				</div>
 			</div>
-			<div flex class="colorWhite" ng-repeat="crew in [movieInfo.data.credits.crew]">
+			<div flex class="colorWhite" ng-repeat="crew in [movieInfo.data.credits.crew]" ng-if="(movieInfo.data.credits.crew | filter: {department: 'Directing'}).length > 0">
 				<h3 class="md-tittle">Directing</h3>
 				<div layout="column">
 					<md-list flex movie-cast-crew="Directing" ng-model="crew">				      	
