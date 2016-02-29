@@ -9,7 +9,7 @@ bucketMovies.filter('url', function() {
     return function(id) {
 
         //var i: it is for change versions templates
-        var i = 4;
+        var i = 1;
 
         //var urls: save the urls templates
         var urls =
