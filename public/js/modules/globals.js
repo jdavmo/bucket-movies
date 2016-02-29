@@ -132,13 +132,19 @@ BMGlobals.service('globalServices', function globalServices($http, $q, $mdDialog
         
     }
 
+    /*
+    |   Service for evit duplicate movies in array tag imgs
+    |   This services need one param:   
+    |   @param array
+    |   @return array
+    */
     globalServices.orderImgTags = function(rows)
     {        
         var array = {};
-        //count positions for each array
+        //count array
         var cant = rows.length;
 
-        //if the first array is empty retun the array 2
+        //if the array is empty retun the array
         if(cant == 0){
             return rows;
         }
@@ -146,9 +152,10 @@ BMGlobals.service('globalServices', function globalServices($http, $q, $mdDialog
         //if array content data
         if(cant > 0)
         {    
+            //for each array tags imgs
             angular.forEach(rows, function(value, key) 
             {                
-
+                //if the movie is not declared in the array insert
                 if(array[value.media.id] == undefined)
                 {
                     array[value.media.id] = value;
@@ -156,71 +163,91 @@ BMGlobals.service('globalServices', function globalServices($http, $q, $mdDialog
 
             });
 
+            //return array img without movies dupicates
             return array;
 
         }
         
     }
 
+    /*
+    |   Service for set values dateO and nameO this is for 
+    |   equalize the date and name of movies and tv 
+    |   This services need one param:   
+    |   @param array
+    |   @return array
+    */
     globalServices.setSortFiels = function(rows)
     {
  
+        //if rows is empty return rows
         if(rows.length == 0){
             return rows;
         }
        
         var i = 0;
+        //for each rows
         angular.forEach(rows, function(value, key)
         {
+            //si media type is movie
             if(value.media_type == 'movie')
             {
                 if(value.release_date == '' || value.release_date == null)
                 {
+                    //set date
                     value['dateO'] = '1900-01-01';
                 }
                 else
                 {
+                    //set date
                     value['dateO'] = value.release_date;
                 }
+                //set name
                 value['nameO'] = value.title;                
                 i++;                 
             }
-
+            //if media type is tv
             else if(value.media_type == 'tv')
             {
                 
                 if(value.first_air_date == '' || value.first_air_date == null)
                 {
+                    //set date
                     value['dateO'] = '1900-01-01';
                 }
                 else
                 {
+                    //set date
                     value['dateO'] = value.first_air_date;
                 }
-                    
+                //set name    
                 value['nameO'] = value.name;                  
                 i++;
             }
+            //if media type is undefined
             else
             {
                 if(value.release_date == '' || value.release_date == null)
                 {
+                    //set date
                     value['dateO'] = '1900-01-01';
                 }
                 else
-                {
+                {   //set date
                     value['dateO'] = value.release_date;
                 }
+                //set name
                 value['nameO']      = value.title;
+                //set media type
                 value['media_type'] = 'movie';
                 i++;
             }
              
         });
     
+        //return array
         return rows;
  
     }
     
-
 });

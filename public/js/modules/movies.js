@@ -173,6 +173,7 @@ BMovies.directive('listMovies', function($location, $filter, $timeout, globalSer
                 }
             });    
 
+            //cal function, first time
             BMlist('search', '');
             
         },
@@ -182,10 +183,8 @@ BMovies.directive('listMovies', function($location, $filter, $timeout, globalSer
 });
 
 /*
-|   Directive for call the movie info in a modal
-|   This directive need the ng-model with the data movie
-|   The scope movie is the result of ng-repeat of list movies
-|   <md-button show-more ng-model="movie">Read +</md-button>
+|   Directive for show trailer in a modal
+|   This directive need the ng-model with the data trailer
 |   @attribute ng-model 
 |   @return
 |*/
@@ -218,10 +217,11 @@ BMovies.directive('showTrailer', function($mdDialog, $filter, $sce) {
                 //the controller init here
                 scope.init = function()
                 {            
-                    //scope with the data movie       
+                    //scope with the data trailer       
                     scope.dataTrailer = locals.data;
                 };    
 
+                //function for sanitize url youtuve
                 scope.getIframeSrc = function (videoId) {
                     return $sce.trustAsResourceUrl('https://www.youtube.com/embed/' + videoId);
                 };            
@@ -235,38 +235,12 @@ BMovies.directive('showTrailer', function($mdDialog, $filter, $sce) {
 });
 
 /*
-|   Directive for call the movie info and credits
-|   This directive need the ng-model with the data movie
-|   get-movie ng-model="dataMovie"
+|   Directive for call the movie info 
+|   This directive need the ng-model with id movie
+|   movie-info ng-model="dataMovie"
 |   @attribute ng-model 
 |   @return
 |*/
-BMovies.directive('getMovie', function(globalServices) {
-    return {
-        restrict : 'AE',
-        scope: {
-            ngModel: '=ngModel'
-        },
-        link: function (scope, element, attrs, ngModelCtrl) {            
-
-            //services global for request
-            globalServices.globalRequest('/getMovie', {id: scope.ngModel.dataInit.id})
-            .then(function(res){
-                //server return ok
-                if(res.validation == 'ok')
-                {
-                    //the scope with the result data movies
-                    scope.ngModel.dataMovie     = res.movie;
-                    scope.ngModel.dataCredits   = res.credits;                                        
-                }                                
-            }, function(err){
-                //toast in the service
-            });  
-
-        }
-    }
-});
-
 BMovies.directive('movieInfo', function(globalServices, $filter) {
     return {
         restrict : 'AE',
@@ -275,6 +249,7 @@ BMovies.directive('movieInfo', function(globalServices, $filter) {
         },
         link: function (scope, element, attrs, ngModelCtrl) { 
 
+            //set scope with movie info
             scope.movieInfo = {url: scope.ngModelMovie.template, data: ''}
 
             //services global for request
@@ -283,28 +258,29 @@ BMovies.directive('movieInfo', function(globalServices, $filter) {
                 //server return ok
                 if(res.validation == 'ok')
                 {
-                    //the scope with the result data person
+                    //the scope with the result data movie
                     scope.movieInfo.data                = res.data;
+                    //set credits cast and crew
                     scope.movieInfo.data.credits.cast   = globalServices.setSortFiels(res.data.credits.cast);
-                    scope.movieInfo.data.credits.crew   = globalServices.setSortFiels(res.data.credits.crew);
-
-                    //scope.movieInfo.data.known_for      = globalServices.orderImgTags(res.data.tagImgs.results);
-
+                    scope.movieInfo.data.credits.crew   = globalServices.setSortFiels(res.data.credits.crew);                    
+                    //sort the cast and crew
                     scope.sortCredits('', scope.ngModelMovie.sort);
                                                            
                 }                                
             }); 
 
+            //sort cast and crew
             scope.sortCredits = function($event, sort)
             {
 
+                //update var sort
                 scope.ngModelMovie.sort = sort;
 
+                //switch for type sort
                 switch(scope.ngModelMovie.sortBy)
                 {
                     case'chronological':
-                        scope.movieInfo.data.credits.cast = $filter('orderBy')(scope.movieInfo.data.credits.cast, 'order', sort)
-                        //scope.movieInfo.data.credits.crew = $filter('orderBy')(scope.movieInfo.data.credits.crew, 'dateO', sort)
+                        scope.movieInfo.data.credits.cast = $filter('orderBy')(scope.movieInfo.data.credits.cast, 'order', sort)                        
                     break;
                     case'name':
                         scope.movieInfo.data.credits.cast = $filter('orderBy')(scope.movieInfo.data.credits.cast, 'name', sort)
@@ -320,9 +296,9 @@ BMovies.directive('movieInfo', function(globalServices, $filter) {
 });
 
 /*
-|   Directive for call the movie info and credits
-|   This directive need the ng-model with the data movie
-|   get-movie ng-model="dataMovie"
+|   Directive for call the person info and credits
+|   This directive need the ng-model with the id person
+|   person-info ng-model="dataMovie"
 |   @attribute ng-model 
 |   @return
 |*/
@@ -344,21 +320,24 @@ BMovies.directive('personInfo', function(globalServices, $filter) {
                 {
                     //the scope with the result data person
                     scope.personInfo.data                = res.data;
+                    //set credits cast and crew
                     scope.personInfo.data.credits.cast   = globalServices.setSortFiels(res.data.credits.cast);
                     scope.personInfo.data.credits.crew   = globalServices.setSortFiels(res.data.credits.crew);
-
+                    //order tags images
                     scope.personInfo.data.known_for      = globalServices.orderImgTags(res.data.tagImgs.results);
-
+                    //sort the cast and crew
                     scope.sortCredits('', scope.ngModelPerson.sort);
                                                            
                 }                                
             }); 
-
+            //sort cast and crew
             scope.sortCredits = function($event, sort)
             {
 
+                //update var sort
                 scope.ngModelPerson.sort = sort;
 
+                //switch for type sort
                 switch(scope.ngModelPerson.sortBy)
                 {
                     case'year':
@@ -382,6 +361,13 @@ BMovies.directive('personInfo', function(globalServices, $filter) {
     }
 });
 
+/*
+|   Directive for set template list cast or crew
+|   This directive need the ng-model with the data movie
+|   person-cast-crew="Action" ng-model="dataMovie"
+|   @attribute ng-model 
+|   @return
+|*/
 BMovies.directive('personCastCrew', function(globalServices, $filter, $state, $mdDialog) {
     return {
         restrict : 'AE',
@@ -391,6 +377,7 @@ BMovies.directive('personCastCrew', function(globalServices, $filter, $state, $m
         },
         link: function (scope, element, attrs, ngModelCtrl) { 
 
+            //switch for set scope with the template
             switch(scope.typeCastCrew)
             {
                 case'Acting':
@@ -403,12 +390,15 @@ BMovies.directive('personCastCrew', function(globalServices, $filter, $state, $m
                 break;
             }   
 
+            //function for change state url            
             scope.goMovie = function(data)
             {
+                //if is movie change state 
                 if(data.media_type == 'movie')
                 {
                     $state.go('home.movie', {id: data.id})
                 }
+                //if is tv alert info
                 if(data.media_type == 'tv')
                 {
                     $mdDialog.show(
@@ -427,6 +417,14 @@ BMovies.directive('personCastCrew', function(globalServices, $filter, $state, $m
     }
 });
 
+
+/*
+|   Directive for set template list cast or crew
+|   This directive need the ng-model with the data movie
+|   movie-cast-crew="Action" ng-model="dataMovie"
+|   @attribute ng-model 
+|   @return
+|*/
 BMovies.directive('movieCastCrew', function(globalServices, $filter) {
     return {
         restrict : 'AE',
@@ -436,6 +434,7 @@ BMovies.directive('movieCastCrew', function(globalServices, $filter) {
         },
         link: function (scope, element, attrs, ngModelCtrl) { 
 
+            //switch for set scope with the template
             switch(scope.typeCastCrew)
             {
                 case'Cast':                    
