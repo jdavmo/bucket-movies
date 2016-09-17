@@ -1,12 +1,8 @@
 # BucketMovies
 
-Bucket movies is an application that allows you to search for popular movies. you can also  search the movies of your favourite actor, this application was made as a developer test for the company Alert Logit Inc. 
+Bucket movies is an application that allows you to search for popular movies. you can also  search the movies of your favourite actor.
 
 This application was made using Laravel Framework 5.2 and Angularjs 1.5, I used these frameworks because are powerfull and optimized.
-
-## Official website
-
-[BucketMovies website](http://bucketapps.co).
 
 ## License
 
